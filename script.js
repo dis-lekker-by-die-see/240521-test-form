@@ -140,6 +140,7 @@ document.getElementById('addClubButton').addEventListener('click', function() {
 document.getElementById('addHorseButton').addEventListener('click', function() {
     const horseContainer = document.getElementById('horseContainer');
     const lastHorse = horseContainer.lastElementChild;
+    const errorMessage = document.getElementById('error-message-horse');
 
     if (lastHorse) {
         const inputs = lastHorse.querySelectorAll('input[required], select[required]');
@@ -154,9 +155,16 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
             }
         });
 
+        // if (!allFilled) {
+        //     alert('Please fill in all required fields before adding another horse.');
+        //     return;
+        // }
         if (!allFilled) {
-            alert('Please fill in all required fields before adding another horse.');
+            errorMessage.textContent = 'Please fill in all required fields before adding another horse.';
+            errorMessage.style.display = 'block';
             return;
+        } else {
+            errorMessage.style.display = 'none';
         }
     }
 
@@ -228,6 +236,7 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
 document.getElementById('addRiderButton').addEventListener('click', function() {
     const riderContainer = document.getElementById('riderContainer');
     const lastRider = riderContainer.lastElementChild;
+    const errorMessage = document.getElementById('error-message-rider');
 
     if (lastRider) {
         const inputs = lastRider.querySelectorAll('input[required], select[required]');
@@ -242,9 +251,16 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
             }
         });
 
+        // if (!allFilled) {
+        //     alert('Please fill in all required fields before adding another rider.');
+        //     return;
+        // }
         if (!allFilled) {
-            alert('Please fill in all required fields before adding another rider.');
+            errorMessage.textContent = 'Please fill in all required fields before adding another rider.';
+            errorMessage.style.display = 'block';
             return;
+        } else {
+            errorMessage.style.display = 'none';
         }
     }
 
@@ -288,6 +304,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
     const eventForm = document.getElementById('eventForm');
     const entryContainer = eventForm.querySelector('.entry-container');
     const lastEntry = entryContainer ? entryContainer.lastElementChild : null;
+    const errorMessage = document.getElementById('error-message-entry');
 
     if (lastEntry) {
         const inputs = lastEntry.querySelectorAll('input[required], select[required]');
@@ -302,9 +319,16 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
             }
         });
 
+        // if (!allFilled) {
+        //     alert('Please fill in all required fields before adding another entry.');
+        //     return;
+        // }
         if (!allFilled) {
-            alert('Please fill in all required fields before adding another entry.');
+            errorMessage.textContent = 'Please fill in all required fields before adding another entry.';
+            errorMessage.style.display = 'block';
             return;
+        } else {
+            errorMessage.style.display = 'none';
         }
     }
 
