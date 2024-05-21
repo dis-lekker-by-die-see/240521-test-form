@@ -30,6 +30,14 @@ label {
     color: #444;
 }
 
+.horseNumber, .riderNumber, .entrantNumber {
+    font-weight: bold;
+    /*margin-bottom: 10px;
+    */
+    display: block;
+    margin-right: 100%;
+}
+
 input, select, button {
     margin-top: 5px;
     padding: 8px;

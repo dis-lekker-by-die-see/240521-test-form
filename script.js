@@ -162,7 +162,9 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
 
     const horseDiv = document.createElement('div');
     horseDiv.className = 'horse';
+    const horseNumber = document.querySelectorAll('.horse').length + 1;
     horseDiv.innerHTML = `
+        <div class="horseNumber">${horseNumber}</div>
         <div class="horse-fields">
             <div>
                 <label for="horseName">馬名:</label>
@@ -246,9 +248,12 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
         }
     }
 
+
     const riderDiv = document.createElement('div');
     riderDiv.className = 'rider';
+    const riderNumber = document.querySelectorAll('.rider').length + 1;
     riderDiv.innerHTML = `
+        <div class="riderNumber">${riderNumber}</div>
         <div class="rider-fields">
             <div>
                 <label for="riderName">選手名:</label>
@@ -308,7 +313,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
     const entryNumber = document.querySelectorAll('.entry').length + 1;
     entryDiv.innerHTML = `
-        <span class="entrantNumber">${entryNumber}</span>
+        <div class="horseNumber">${entryNumber}</div>
         
         <label for="riderSelect">Rider:</label>
         <select class="riderSelect" required></select>
