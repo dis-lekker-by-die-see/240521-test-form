@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Riding Competition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Horse Riding Competition Entry</h1>
+
+        <h2>Horses</h2>
+        <div id="horseContainer">
+            <div class="horse">
+                <label for="horseName">Horse Name:</label>
+                <input type="text" class="horseName" required>
+            </div>
+        </div>
+        <button type="button" id="addHorseButton">Add Another Horse</button>
+        
+        <h2>Riders</h2>
+        <div id="riderContainer">
+            <div class="rider">
+                <label for="riderName">Rider Name:</label>
+                <input type="text" class="riderName" required>
+            </div>
+        </div>
+        <button type="button" id="addRiderButton">Add Another Rider</button>
+        
+        <h2>Event Entries</h2>
+        <form id="eventForm">
+            <div class="entry">
+                <span class="entrantNumber">1</span>
+                
+                <label for="riderSelect">Rider:</label>
+                <select class="riderSelect"></select>
+
+                <label for="eventNumber">Event Number:</label>
+                <input type="number" class="eventNumber" min="1" required>
+                <span class="eventName"></span>
+
+                <label for="horseSelect">Horse:</label>
+                <select class="horseSelect"></select>
+            </div>
+        </form>
+        <button type="button" id="addEntryButton">Add Another Entry</button>
+        <button type="button" id="submitEntriesButton">Submit Entries</button>
+        
+        <div>
+            <h2>Download Entry List</h2>
+            <a id="downloadLink" style="display:none;">Download CSV</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
