@@ -31,7 +31,6 @@ label {
 }
 
 input, select, button {
-    width: 100%;
     margin-top: 5px;
     padding: 8px;
     font-size: 14px;
@@ -39,6 +38,7 @@ input, select, button {
     border-radius: 8px;
     box-sizing: border-box;
     transition: all 0.3s ease;
+    width: 100%; /* Ensure inputs take up full width */
 }
 
 input:focus, select:focus {
@@ -69,7 +69,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
+#addClubButton, #addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
     background-color: #228B22;
     color: white;
     border: none;
@@ -82,7 +82,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-#addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #submitEntriesButton:hover {
+#addClubButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #submitEntriesButton:hover {
     background-color: #006400;
 }
 
@@ -99,20 +99,45 @@ button:hover {
     text-decoration: underline;
 }
 
-.entry {
+.riding-club-container, .horse-container, .rider-container {
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
+}
+
+.club .club-fields, .horse .horse-fields, .rider .rider-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+.club .club-fields > div {
+    flex: 1 1 calc(50% - 20px); /* Adjust the width as needed */
+}
+
+.horse .horse-fields > div, .rider .rider-fields > div {
+    flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
+}
+
+.entry {
+    display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
-.entry label, .entry input, .entry select, .entry span {
-    margin: 0;
-    flex: 1;
-}
-
-.entrantNumber {
+.entry .entrantNumber {
     flex: 0 0 50px; /* Fixed width for entry number */
+}
+
+.entry .riderSelect, .entry .horseSelect {
+    flex: 1;
+    min-width: 150px; /* Set a minimum width for the dropdowns */
+}
+
+.entry .eventNumber {
+    flex: 0 0 80px; /* Fixed width for the event number input */
 }
 
 .eventName {
@@ -131,7 +156,7 @@ button:hover {
         margin-top: 10px;
     }
 
-    .entry {
+    .club .club-fields, .horse .horse-fields, .rider .rider-fields, .entry {
         flex-direction: column;
         align-items: stretch;
     }
