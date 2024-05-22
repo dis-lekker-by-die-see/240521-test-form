@@ -1,12 +1,13 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 20px;
+    padding: 20px;
     background-color: #e6f2e6;
     color: #333;
     line-height: 1.6;
 }
+
 
 .container {
     max-width: 1200px;
@@ -45,7 +46,7 @@ label {
     font-size: 14px;
 }
 
-.horseNumber, .riderNumber, .entrantNumber {
+.teamNumber, .horseNumber, .riderNumber, .entrantNumber {
     font-weight: bold;
     display: block;
     margin-right: 100%;
@@ -81,7 +82,7 @@ button:hover {
     background-color: #006400;
 }
 
-.horse, .rider, .entry {
+.team, .horse, .rider, .entry {
     margin-bottom: 20px;
     padding: 20px;
     background-color: #f9f9f9;
@@ -90,7 +91,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#addClubButton, #addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
+#addClubButton, #addTeamButton, #addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
     background-color: #228B22;
     color: white;
     border: none;
@@ -103,7 +104,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-#addClubButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #submitEntriesButton:hover {
+#addClubButton:hover, #addTeamButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #submitEntriesButton:hover {
     background-color: #006400;
 }
 
@@ -120,13 +121,13 @@ button:hover {
     text-decoration: underline;
 }
 
-.riding-club-container, .horse-container, .rider-container {
+.riding-club-container, .team-container, .horse-container, .rider-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.club .club-fields, .horse .horse-fields, .rider .rider-fields {
+.club .club-fields, .team .team-fields, .horse .horse-fields, .rider .rider-fields {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -152,7 +153,7 @@ button:hover {
     flex: 0 0 50px; /* Fixed width for entry number */
 }
 
-.entry .riderSelect, .entry .horseSelect {
+.entry .teamSelect, .entry .riderSelect, .entry .horseSelect {
     flex: 1;
     min-width: 150px; /* Set a minimum width for the dropdowns */
 }
@@ -177,7 +178,7 @@ button:hover {
         margin-top: 10px;
     }
 
-    .club .club-fields, .horse .horse-fields, .rider .rider-fields, .entry {
+    .club .club-fields, .team .team-fields, .horse .horse-fields, .rider .rider-fields, .entry {
         flex-direction: column;
         align-items: stretch;
     }

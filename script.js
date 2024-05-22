@@ -117,6 +117,75 @@ document.getElementById('addClubButton').addEventListener('click', function() {
 });
 
 //=============================================================================================================================
+//                            Rider
+
+// document.getElementById('addRiderButton').addEventListener('click', function() {
+//     const riderContainer = document.getElementById('riderContainer');
+//     const lastRider = riderContainer.lastElementChild;
+//     const errorMessage = document.getElementById('error-message-rider');
+
+//     if (lastRider) {
+//         const inputs = lastRider.querySelectorAll('input[required], select[required]');
+//         let allFilled = true;
+
+//         inputs.forEach(input => {
+//             if (!input.value.trim()) {
+//                 allFilled = false;
+//                 input.style.borderColor = 'red'; // Highlight the empty fields
+//             } else {
+//                 input.style.borderColor = ''; // Reset the border color if filled
+//             }
+//         });
+
+//         // if (!allFilled) {
+//         //     alert('Please fill in all required fields before adding another rider.');
+//         //     return;
+//         // }
+//         if (!allFilled) {
+//             errorMessage.textContent = 'Please fill in all required fields before adding another rider.';
+//             errorMessage.style.display = 'block';
+//             return;
+//         } else {
+//             errorMessage.style.display = 'none';
+//         }
+//     }
+
+
+//     const riderDiv = document.createElement('div');
+//     riderDiv.className = 'rider';
+//     const riderNumber = document.querySelectorAll('.rider').length + 1;
+//     riderDiv.innerHTML = `
+//         <div class="riderNumber">${riderNumber}</div>
+//         <div class="rider-fields">
+//             <div>
+//                 <label for="riderName">選手名:</label>
+//                 <input type="text" class="riderName" required>
+//             </div>
+//             <div>
+//                 <label for="riderNameFurigana">フリガナ:</label>
+//                 <input type="text" class="riderNameFurigana" required>
+//             </div>
+//             <div>
+//                 <label for="riderRegNumber">登録番号:</label>
+//                 <input type="text" class="riderRegNumber" required>
+//             </div>
+//             <div>
+//                 <label for="riderSex">性別:</label>
+//                 <select class="riderSex" required>
+//                     <option value="" disabled selected>性別</option>
+//                     <option value="男子">男子</option>
+//                     <option value="女子">女子</option>
+//                 </select>
+//             </div>
+//         </div>
+//     `;
+//     riderContainer.appendChild(riderDiv);
+
+//     updateSelectOptions();
+// });
+
+
+//=============================================================================================================================
 //                            Horse
 
 document.getElementById('addHorseButton').addEventListener('click', function() {

@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horse Riding Competition</title>
+    <title>Dressage / Show Jumping Competition Entry Form</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>第48回中国・四国馬術大会</h1>
+    <h2>2024年5月16日 〜 2024年5月19日</h2>
+    <p>
+        このウェブページフォームは、各乗馬クラブが競技会に参加するために必要な.csvデータファイルを生成します。生成された.csvファイルは連盟にメールで送信され、それがクラブの参加申し込みとして扱われます。各エントリーごとにフォームを記入する必要があるため、複数回にわたって.csvエントリーファイルを生成するのではなく、全参加者と馬を含めた1つのセットを作成することをお勧めします。これにより、エントリーの重複やエラーを避けることができ、どちらもペナルティ料金が発生します。
+        <br><br>注意：このページはブラウザにロードされます。ブラウザを更新すると、すべての情報が失われ、フォーム全体を再度記入する必要があります。情報は生成された.csvファイル以外には保存されません。
+    </p>
     <div class="container">
-        <h1>第48回中国・四国馬術大会</h1>
-        <h2>2024年5月16日 〜 2024年5月19日</h2>
-        <p>
-            このウェブページフォームは、各乗馬クラブが競技会に参加するために必要な.csvデータファイルを生成します。生成された.csvファイルは連盟にメールで送信され、それがクラブの参加申し込みとして扱われます。各エントリーごとにフォームを記入する必要があるため、複数回にわたって.csvエントリーファイルを生成するのではなく、全参加者と馬を含めた1つのセットを作成することをお勧めします。これにより、エントリーの重複やエラーを避けることができ、どちらもペナルティ料金が発生します。
-            <br><br>注意：このページはブラウザにロードされます。ブラウザを更新すると、すべての情報が失われ、フォーム全体を再度記入する必要があります。情報は生成された.csvファイル以外には保存されません。
-        </p>
-
+        <!-- Club =============================================================================-->
+        <h1>組織</h1>
         <div id="ridingClubContainer" class="riding-club-container">
             <div class="club">
                 <div class="club-fields">
@@ -51,8 +52,27 @@
             </div>
         </div>
         <div id="error-message-club" class="error-message"></div>
-        <button type="button" id="addClubButton">乗馬クラブの詳細を追加</button>
-
+        <button type="button" id="addClubButton">組織の詳細を追加</button>
+        <!-- Teams =============================================================================-->
+        <h2>所属</h2>
+        <h4>
+            いくつかの組織・乗馬クラブには複数の所属・チームがあります。例えば、(組織) 蒜山ホースパーク：(所属) 蒜山ホースパーク、(組織) 蒜山ホースパーク：(所属) 真庭市スポーツ少年団。所属名・チームが組織名・乗馬クラブと同じ場合は、ここに組織名をもう一度追加してください。
+        </h4>
+        <div id="teamContainer" class="team-container">
+            <div class="team">
+                <div class="team-fields">
+                    
+                    <div class="teamNumber">1</div>
+                    <div>
+                        <label for="teamName">所属名:</label>
+                        <input type="text" class="teamName" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="error-message-team" class="error-message"></div>
+        <button type="button" id="addTeamButton">もう一つの所属を追加</button>
+        <!-- Horses =============================================================================-->
         <h2>Horses</h2>
         <div id="horseContainer" class="horse-container">
             <div class="horse">
@@ -115,7 +135,7 @@
         </div>
         <div id="error-message-horse" class="error-message"></div>
         <button type="button" id="addHorseButton">もう一頭の馬を追加</button>
-        
+        <!-- Riders =============================================================================-->
         <h2>Riders</h2>
         <div id="riderContainer" class="rider-container">
             <div class="rider">
@@ -147,7 +167,7 @@
         </div>
         <div id="error-message-rider" class="error-message"></div>
         <button type="button" id="addRiderButton">もう一人の選手を追加</button>
-        
+        <!-- Entries =============================================================================-->
         <h2>Event Entries</h2>
         <form id="eventForm">
             <div class="entry-container">
@@ -168,7 +188,7 @@
         <div id="error-message-entry" class="error-message"></div>
         <button type="button" id="addEntryButton">もう一つのエントリーを追加</button>
         <button type="button" id="submitEntriesButton">.csvファイルを生成</button>
-        
+        <!-- Files =============================================================================-->
         <div>
             <h2>.csvファイルの一覧</h2>
             <a id="downloadLink" style="display:none;">.csvファイルをダウンロード</a>
