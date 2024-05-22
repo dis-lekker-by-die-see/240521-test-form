@@ -29,9 +29,6 @@ function loadEventCSV() {
 // // Display in the HTML element
 // document.getElementById('starOutput').textContent = numberToChar(3);
 
-
-
-
 //=============================================================================================================================
 //                            Club
 
@@ -161,21 +158,18 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
     teamDiv.className = 'team';
     const teamNumber = document.querySelectorAll('.team').length + 1;
     teamDiv.innerHTML = `
+        <div class="teamNumberLine">
+            <div class="teamNumber">${teamNumber}</div>
+            <div class="teamNumberChar">${'E'.repeat(teamNumber)}</div>
+        </div>
         <div class="team-fields">
-            <div class="teamNumberLine">
-                <div class="teamNumber">${teamNumber}</div>
-                <div class="teamNumberChar">${'E'.repeat(teamNumber)}</div>
-            </div>
-            <div class="team-fields">
-                <div>
-                    <label for="teamName">所属名:</label>
-                    <input type="text" class="teamName" required>
-                </div>
+            <div>
+                <label for="teamName">所属名:</label>
+                <input type="text" class="teamName" required>
             </div>
         </div>
     `;
     teamContainer.appendChild(teamDiv);
-
     updateSelectOptions();
 });
 
@@ -218,11 +212,11 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
     horseDiv.className = 'horse';
     const horseNumber = document.querySelectorAll('.horse').length + 1;
     horseDiv.innerHTML = `
+        <div class="horseNumberLine">
+            <div class="horseNumber">${horseNumber}</div>
+            <div class="horseNumberChar">${'Y'.repeat(horseNumber)}</div>
+        </div>
         <div class="horse-fields">
-            <div class="horseNumberLine">
-                <div class="horseNumber">${horseNumber}</div>
-                <div class="horseNumberChar">${'Y'.repeat(horseNumber)}</div>
-            </div>
             <div>
                 <label for="horseName">馬名:</label>
                 <input type="text" class="horseName" required>
@@ -315,7 +309,10 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
     riderDiv.className = 'rider';
     const riderNumber = document.querySelectorAll('.rider').length + 1;
     riderDiv.innerHTML = `
-        <div class="riderNumber">${riderNumber}</div>
+        <div class="riderNumberLine">
+            <div class="riderNumber">${riderNumber}</div>
+            <div class="riderNumberChar">${'V'.repeat(riderNumber)}</div>
+        </div>
         <div class="rider-fields">
             <div>
                 <label for="riderName">選手名:</label>
@@ -340,7 +337,6 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
         </div>
     `;
     riderContainer.appendChild(riderDiv);
-
     updateSelectOptions();
 });
 
@@ -384,17 +380,25 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
     const entryNumber = document.querySelectorAll('.entry').length + 1;
     entryDiv.innerHTML = `
-        <div class="horseNumber">${entryNumber}</div>
-        
-        <label for="riderSelect">Rider:</label>
-        <select class="riderSelect" required></select>
-
-        <label for="eventNumber">Event Number:</label>
-        <input type="number" class="eventNumber" min="1" max="999" required>
-        <span class="eventName"></span>
-
-        <label for="horseSelect">Horse:</label>
-        <select class="horseSelect" required></select>
+        <div class="entryNumberLine">
+            <div class="entryNumber">${entryNumber}</div>
+            <div class="entryNumberChar">${'C'.repeat(entryNumber)}</div>
+        </div>
+        <div class="entry-fields">
+            <div>
+                <label for="riderSelect">Rider:</label>
+                <select class="riderSelect" required></select>
+            </div>
+            <div>
+                <label for="eventNumber">Event Number:</label>
+                <input type="number" class="eventNumber" min="1" max="999" required>
+                <span class="eventName"></span>
+            </div>
+            <div>
+                <label for="horseSelect">Horse:</label>
+                <select class="horseSelect" required></select>
+            </div>
+        </div>
     `;
     
     // Ensure the entry container exists

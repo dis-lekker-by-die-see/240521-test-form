@@ -62,13 +62,11 @@
         </h4>
         <div id="teamContainer" class="team-container">
             <div class="team">
+                <div class="teamNumberLine">
+                    <div class="teamNumber">1</div>
+                    <div class="teamNumberChar">E</div>
+                </div>
                 <div class="team-fields">
-
-                    <div class="teamNumberLine">
-                        <div class="teamNumber">1</div>
-                        <div class="teamNumberChar">E</div>
-                    </div>
-                    
                     <div>
                         <label for="teamName">所属名:</label>
                         <input type="text" class="teamName" required>
@@ -82,12 +80,12 @@
         <h2>馬</h2>
         <div id="horseContainer" class="horse-container">
             <div class="horse">
+                <div class="horseNumberLine">
+                    <div class="horseNumber">1</div>
+                    <div class="horseNumberChar">Y</div>
+                    <!--Chess Magnetic m-->
+                </div>
                 <div class="horse-fields">
-                    <div class="horseNumberLine">
-                        <div class="horseNumber">1</div>
-                        <div class="horseNumberChar">Y</div>
-                        <!--Chess Magnetic m-->
-                    </div>
                     <div>
                         <label for="horseName">馬名:</label>
                         <input type="text" class="horseName" required>
@@ -150,13 +148,11 @@
         <div id="riderContainer" class="rider-container">
             <div class="rider">
                 <div class="rider-fields">
-
                     <div class="riderNumberLine">
                         <div class="riderNumber">1</div>
                         <div class="riderNumberChar">V</div>
                         <!--Sport TFB & -->
                     </div>
-
                     <div>
                         <label for="riderName">選手名:</label>
                         <input type="text" class="riderName" required>
@@ -191,15 +187,21 @@
                         <div class="entryNumber">1</div>
                         <div class="entryNumberChar">C</div>
                     </div>
-                    <label for="riderSelect">Rider:</label>
-                    <select class="riderSelect" required></select>
-
-                    <label for="eventNumber">Event Number:</label>
-                    <input type="number" class="eventNumber" min="1" max="999" required>
-                    <span class="eventName"></span>
-
-                    <label for="horseSelect">Horse:</label>
-                    <select class="horseSelect" required></select>
+                    <div class="entry-fields">
+                        <div>
+                            <label for="riderSelect">Rider:</label>
+                            <select class="riderSelect" required></select>
+                        </div>
+                        <div>
+                            <label for="eventNumber">Event Number:</label>
+                            <input type="number" class="eventNumber" min="1" max="999" required>
+                            <span class="eventName"></span>
+                        </div>
+                        <div>
+                            <label for="horseSelect">Horse:</label>
+                            <select class="horseSelect" required></select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
