@@ -15,6 +15,7 @@
             このウェブページフォームは、各乗馬クラブが競技会に参加するために必要な.csvデータファイルを生成します。生成された.csvファイルは連盟にメールで送信され、それがクラブの参加申し込みとして扱われます。各エントリーごとにフォームを記入する必要があるため、複数回にわたって.csvエントリーファイルを生成するのではなく、全参加者と馬を含めた1つのセットを作成することをお勧めします。これにより、エントリーの重複やエラーを避けることができ、どちらもペナルティ料金が発生します。
             <br><br>注意：このページはブラウザにロードされます。ブラウザを更新すると、すべての情報が失われ、フォーム全体を再度記入する必要があります。情報は生成された.csvファイル以外には保存されません。
         </p>
+        <hr>
         <!-- Club =============================================================================-->
         <h2>組織</h2>
         <div id="ridingClubContainer" class="riding-club-container">
@@ -62,8 +63,12 @@
         <div id="teamContainer" class="team-container">
             <div class="team">
                 <div class="team-fields">
+
+                    <div class="teamNumberLine">
+                        <div class="teamNumber">1</div>
+                        <div class="teamNumberChar">E</div>
+                    </div>
                     
-                    <div class="teamNumber">1</div>
                     <div>
                         <label for="teamName">所属名:</label>
                         <input type="text" class="teamName" required>
@@ -74,11 +79,18 @@
         <div id="error-message-team" class="error-message"></div>
         <button type="button" id="addTeamButton">もう一つの所属を追加</button>
         <!-- Horses =============================================================================-->
-        <h2>Horses</h2>
+        <h2>馬</h2>
         <div id="horseContainer" class="horse-container">
             <div class="horse">
                 <div class="horse-fields">
-                    <div class="horseNumber">1</div>
+
+                  
+                    <div class="horseNumberLine">
+                        <div class="horseNumber">1</div>
+                        <div class="horseNumberChar">Y</div>
+                        <!--Chess Magnetic m-->
+                    </div>
+                    
                     <div>
                         <label for="horseName">馬名:</label>
                         <input type="text" class="horseName" required>
@@ -137,11 +149,17 @@
         <div id="error-message-horse" class="error-message"></div>
         <button type="button" id="addHorseButton">もう一頭の馬を追加</button>
         <!-- Riders =============================================================================-->
-        <h2>Riders</h2>
+        <h2>選手</h2>
         <div id="riderContainer" class="rider-container">
             <div class="rider">
                 <div class="rider-fields">
-                    <div class="riderNumber">1</div>
+
+                    <div class="riderNumberLine">
+                        <div class="riderNumber">1</div>
+                        <div class="riderNumberChar">V</div>
+                        <!--Sport TFB & -->
+                    </div>
+
                     <div>
                         <label for="riderName">選手名:</label>
                         <input type="text" class="riderName" required>
@@ -168,11 +186,14 @@
         <div id="error-message-rider" class="error-message"></div>
         <button type="button" id="addRiderButton">もう一人の選手を追加</button>
         <!-- Entries =============================================================================-->
-        <h2>Event Entries</h2>
+        <h2>エントリー</h2>
         <form id="eventForm">
             <div class="entry-container">
                 <div class="entry">
-                    <div class="entrantNumber">1</div>
+                    <div class="entryNumberLine">
+                        <div class="entryNumber">1</div>
+                        <div class="entryNumberChar">C</div>
+                    </div>
                     <label for="riderSelect">Rider:</label>
                     <select class="riderSelect" required></select>
 

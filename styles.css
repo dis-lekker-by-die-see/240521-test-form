@@ -4,6 +4,21 @@
     font-family: 'DamaskDings';
     src: url('fonts/damaskdings1.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'CHESS MAGNETIC';
+    src: url('fonts/MAGNFONT.TTF') format('truetype');
+}
+@font-face {
+    font-family: 'Sports TFB';
+    src: url('fonts/Sports tfb.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'IntellectaHeraldics';
+    src: url('fonts/IntellectaHeraldics.ttf') format('truetype');
+}
+
 
 body {
     font-family: "Segoe UI", "Meiryo UI", sans-serif;
@@ -38,10 +53,88 @@ h1, h2 {
 .damask-heading {
     margin-top: -10px;
     font-family: 'DamaskDings';
-    font-weight: 600;
+    /*font-family: 'CHESS MAGNETIC';
+    */font-weight: 600;
     font-size: 3em;
 }
+/*----------- Team Number ----------------------------------------------------------*/
+.teamNumberLine, .horseNumberLine, .riderNumberLine, .entryNumberLine {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start; 
+    margin-bottom: -60px;
+}
+/*.teamNumber, .teamNumberChar, 
+.horseNumber, .horseNumberChar,
+.riderNumber, .riderNumberChar {
+    margin-right: 5px;
+}
+*/
+.teamNumber, .horseNumber, .riderNumber, .entryNumber {
+    margin-top: 30px;
+    font-weight: bold;
+    margin-right: 10px;
+}
 
+.teamNumberChar, .horseNumberChar, .riderNumberChar, .entryNumberChar {
+    font-family: 'IntellectaHeraldics';
+    position: relative;
+    top: -43px; /* Moves the text up by x pixels */
+    font-size: 4.5em;
+    margin-right: 2000px;
+}
+/*----------- Horse Number ----------------------------------------------------------*/
+/*.horseNumberLine {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start; 
+    margin-bottom: -30px;
+}
+.horseNumber, .horseNumberChar {
+    margin-right: 5px;
+}
+.horseNumber {
+    font-weight: bold;
+}
+
+.horseNumberChar {
+    font-family: 'CHESS MAGNETIC';
+    position: relative;
+    top: -20px; 
+    font-size: 2em;
+    margin-right: 2000px;
+}
+
+/*----------- Rider Number ----------------------------------------------------------*/
+/*.riderNumberLine {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start; 
+    margin-bottom: -30px;
+}
+.riderNumber, .riderNumberChar {
+    margin-right: 5px;
+}
+.riderNumber {
+    font-weight: bold;
+}
+
+.riderNumberChar {
+    font-family: 'Sports TFB';
+    position: relative;
+    top: -15px; 
+    font-size: 2em;
+    margin-right: 2000px;
+}
+
+/*----------- Entry Number ----------------------------------------------------------*/
+/*.entryNumber {
+    font-weight: bold;
+    display: block;
+    margin-right: 100%;
+}
+
+/*-------------------------------------------------------------------------------------*/
 label {
     display: block;
     margin-top: 10px;
@@ -62,12 +155,6 @@ label {
     color: #333; 
     margin-left: 9px;
     font-size: 14px;
-}
-
-.teamNumber, .horseNumber, .riderNumber, .entrantNumber {
-    font-weight: bold;
-    display: block;
-    margin-right: 100%;
 }
 
 input, select, button {
@@ -115,7 +202,7 @@ button:hover {
     padding: 20px;
     /*background-color: #f9f9f9;
     */
-    background-color: pink;
+    background-color: rgb(251, 234, 237);
     border: 1px solid #e1e1e1;
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -181,7 +268,7 @@ button:hover {
 }
 */
 
-/*.entry .entrantNumber {
+/*.entry .entryNumber {
     flex: 0 0 50px; /* Fixed width for entry number 
 }
 */

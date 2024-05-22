@@ -21,6 +21,17 @@ function loadEventCSV() {
     });
     console.log('Events loaded:', events); // For debugging purposes
 }
+
+// function numberToChar(number) {
+//     return 'm'.repeat(number);
+// }
+
+// // Display in the HTML element
+// document.getElementById('starOutput').textContent = numberToChar(3);
+
+
+
+
 //=============================================================================================================================
 //                            Club
 
@@ -145,6 +156,11 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
             errorMessage.style.display = 'none';
         }
     }
+
+
+
+
+
 
     const teamDiv = document.createElement('div');
     teamDiv.className = 'team';
@@ -417,7 +433,7 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
     }));
 
     const entries = Array.from(document.querySelectorAll('.entry')).map(entry => ({
-        number: entry.querySelector('.entrantNumber').textContent,
+        number: entry.querySelector('.entryNumber').textContent,
         rider: entry.querySelector('.riderSelect').value,
         eventNumber: entry.querySelector('.eventNumber').value,
         eventName: entry.querySelector('.eventName').textContent,
