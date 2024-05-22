@@ -54,7 +54,7 @@ document.getElementById('addClubButton').addEventListener('click', function() {
         });
         
         if (!allFilled) {
-            errorMessage.textContent = 'Please fill in all required fields.';
+            errorMessage.textContent = 'すべての必須項目にご記入ください。';
             errorMessage.style.display = 'block';
             return;
         } else {
