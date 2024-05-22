@@ -1,5 +1,4 @@
 
-
 @font-face {
     font-family: 'DamaskDings';
     src: url('fonts/damaskdings1.ttf') format('truetype');
@@ -13,13 +12,12 @@
     src: url('fonts/Sports tfb.ttf') format('truetype');
 }
 
-
 @font-face {
     font-family: 'IntellectaHeraldics';
     src: url('fonts/IntellectaHeraldics.ttf') format('truetype');
 }
 
-
+/*---------------------------------------------------------------------*/
 body {
     font-family: "Segoe UI", "Meiryo UI", sans-serif;
     margin: 20px;
@@ -36,7 +34,6 @@ body {
     background: white;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    
 }
 
 p {
@@ -58,89 +55,7 @@ h1, h2 {
     */font-weight: 600;
     font-size: 3em;
 }
-/*----------- Team Number ----------------------------------------------------------*/
-.teamNumberLine, .horseNumberLine, .riderNumberLine, .entryNumberLine {
-    margin-top: 15px;
-    display: flex;
-    align-items: flex-start; 
-    margin-bottom: -60px;
-    margin-right: 100%
 
-}
-/*.teamNumber, .teamNumberChar, 
-.horseNumber, .horseNumberChar,
-.riderNumber, .riderNumberChar {
-    margin-right: 5px;
-}
-*/
-.teamNumber, .horseNumber, .riderNumber, .entryNumber {
-    display: inline-block;
-    margin-top: 30px;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.teamNumberChar, .horseNumberChar, .riderNumberChar, .entryNumberChar {
-    font-family: 'IntellectaHeraldics';
-    display: inline-block;
-    position: relative;
-    top: -43px; /* Moves the text up by x pixels */
-    font-size: 4.5em;
-    white-space: nowrap;
-    overflow: hidden;
-}
-/*----------- Horse Number ----------------------------------------------------------*/
-/*.horseNumberLine {
-    margin-top: 15px;
-    display: flex;
-    align-items: flex-start; 
-    margin-bottom: -30px;
-}
-.horseNumber, .horseNumberChar {
-    margin-right: 5px;
-}
-.horseNumber {
-    font-weight: bold;
-}
-
-.horseNumberChar {
-    font-family: 'CHESS MAGNETIC';
-    position: relative;
-    top: -20px; 
-    font-size: 2em;
-    margin-right: 2000px;
-}
-
-/*----------- Rider Number ----------------------------------------------------------*/
-/*.riderNumberLine {
-    margin-top: 15px;
-    display: flex;
-    align-items: flex-start; 
-    margin-bottom: -30px;
-}
-.riderNumber, .riderNumberChar {
-    margin-right: 5px;
-}
-.riderNumber {
-    font-weight: bold;
-}
-
-.riderNumberChar {
-    font-family: 'Sports TFB';
-    position: relative;
-    top: -15px; 
-    font-size: 2em;
-    margin-right: 2000px;
-}
-
-/*----------- Entry Number ----------------------------------------------------------*/
-/*.entryNumber {
-    font-weight: bold;
-    display: block;
-    margin-right: 100%;
-}
-
-/*-------------------------------------------------------------------------------------*/
 label {
     display: block;
     margin-top: 10px;
@@ -153,14 +68,6 @@ label {
     color: red;
     font-weight: bold;
     margin-top: 10px;
-}
-
-.clubNameDisplay, .registrationOfficerDisplay, .mobileDisplay, .phoneDisplay, .emailDisplay, .faxDisplay, .addressDisplay {
-    display: block; 
-    margin-top: 5px; 
-    color: #333; 
-    margin-left: 9px;
-    font-size: 14px;
 }
 
 input, select, button {
@@ -193,16 +100,42 @@ button:hover {
     background-color: #006400;
 }
 
-.club, .team, .horse, .rider, .entry {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
-    
+/*----------- Club ----------------------------------------------------------*/
+.clubNameDisplay, .registrationOfficerDisplay, .mobileDisplay, .phoneDisplay, .emailDisplay, .faxDisplay, .addressDisplay {
+    display: block; 
+    margin-top: 5px; 
+    color: #333; 
+    margin-left: 9px;
+    font-size: 14px;
 }
 
+/*----------- Number & Counter Character ----------------------------------------------------------*/
+.teamNumberLine, .horseNumberLine, .riderNumberLine, .entryNumberLine {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start; 
+    margin-bottom: -60px;
+    margin-right: 100%
+}
 
+.teamNumber, .horseNumber, .riderNumber, .entryNumber {
+    display: inline-block;
+    margin-top: 30px;
+    font-weight: bold;
+    margin-right: 10px;
+}
 
+.teamNumberChar, .horseNumberChar, .riderNumberChar, .entryNumberChar {
+    font-family: 'IntellectaHeraldics';
+    display: inline-block;
+    position: relative;
+    top: -43px; 
+    font-size: 4.5em;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/*---------------------------------------------------------------------*/
 .team, .horse, .rider, .entry {
     margin-bottom: 20px;
     padding: 20px;
@@ -248,38 +181,20 @@ button:hover {
     overflow: hidden;
 }
 
-/*.riding-club-container, .team-container, .horse-container, .rider-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    
-}
-*/
-
-.club .club-fields, .team .team-fields, .teamDiv, .horse .horse-fields, .horseDiv, .rider .rider-fields, .riderDiv {
+.club .club-fields, .team .team-fields, .teamDiv, 
+.horse .horse-fields, .horseDiv, .rider .rider-fields, .riderDiv,
+.entry .entry-fields, .entryDiv {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     width: 100%;
 }
 
-.club .club-fields > div, .team .team-fields > div, .horse .horse-fields > div, .rider .rider-fields > div {
-    /*flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
+.club .club-fields > div, .team .team-fields > div, 
+.horse .horse-fields > div, .rider .rider-fields > div,
+.entry .entry-fields > div {
     flex: 1 1 calc(50% - 20px);
 }
-
-/*.entry {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-*/
-
-/*.entry .entryNumber {
-    flex: 0 0 50px; /* Fixed width for entry number 
-}
-*/
 
 .entry .teamSelect, .entry .riderSelect, .entry .horseSelect {
     flex: 1;
@@ -292,8 +207,11 @@ button:hover {
 
 .eventName {
     flex: 1;
+    position: relative;
+    top: 8px; 
+    font-size: 1.1em;
     font-weight: 400;
-    margin-top: 10px;
+    margin-left: 8px; 
 }
 
 /* Responsive styles */
@@ -307,15 +225,9 @@ button:hover {
         margin-top: 10px;
     }
 
-    .club .club-fields > div, .team .team-fields > div, .horse .horse-fields > div, .rider .rider-fields > div {
-        /*flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
+    .club .club-fields > div, .team .team-fields > div, 
+    .horse .horse-fields > div, .rider .rider-fields > div,
+    .entry .entry-fields > div {
         flex: 1 1 calc(100% - 20px);
-    }
-    .entry {
-        display: flex;
-        flex: 1 1 calc(100% - 20px);
-        flex-direction: column;
-        align-items: stretch;  
-        /**/
     }
 }
