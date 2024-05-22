@@ -1,13 +1,18 @@
 
+
+@font-face {
+    font-family: 'DamaskDings';
+    src: url('fonts/damaskdings1.ttf') format('truetype');
+}
+
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Segoe UI", "Meiryo UI", sans-serif;
     margin: 20px;
     padding: 20px;
     background-color: #e6f2e6;
     color: #333;
     line-height: 1.6;
 }
-
 
 .container {
     max-width: 1200px;
@@ -18,16 +23,29 @@ body {
     border-radius: 12px;
 }
 
+p {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
 h1, h2 {
     text-align: center;
-    font-weight: 700;
+    font-weight: 600;
     color: #2b2b2b;
+}
+
+.damask-heading {
+    margin-top: -10px;
+    font-family: 'DamaskDings';
+    font-weight: 600;
+    font-size: 3em;
 }
 
 label {
     display: block;
     margin-top: 10px;
-    font-weight: 600;
+    font-weight: 500;
     color: #444;
 }
 
@@ -82,10 +100,20 @@ button:hover {
     background-color: #006400;
 }
 
+.club, .team, .horse, .rider, .entry {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /*align-items: center;
+    */
+}
+
 .team, .horse, .rider, .entry {
     margin-bottom: 20px;
     padding: 20px;
-    background-color: #f9f9f9;
+    /*background-color: #f9f9f9;
+    */
+    background-color: pink;
     border: 1px solid #e1e1e1;
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -121,37 +149,40 @@ button:hover {
     text-decoration: underline;
 }
 
-.riding-club-container, .team-container, .horse-container, .rider-container {
+/*.riding-club-container, .team-container, .horse-container, .rider-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    
 }
+*/
 
-.club .club-fields, .team .team-fields, .horse .horse-fields, .rider .rider-fields {
+.club .club-fields, .team .team-fields, .teamDiv, .horse .horse-fields, .horseDiv, .rider .rider-fields, .riderDiv {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     width: 100%;
 }
 
-.club .club-fields > div {
-    flex: 1 1 calc(50% - 20px); /* Adjust the width as needed */
+.club .club-fields > div, .team .team-fields > div, .horse .horse-fields > div, .rider .rider-fields > div {
+    /*flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
+    flex: 1 1 calc(50% - 20px);
 }
 
-.horse .horse-fields > div, .rider .rider-fields > div {
-    flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
-}
 
-.entry {
+
+/*.entry {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
 }
+*/
 
-.entry .entrantNumber {
-    flex: 0 0 50px; /* Fixed width for entry number */
+/*.entry .entrantNumber {
+    flex: 0 0 50px; /* Fixed width for entry number 
 }
+*/
 
 .entry .teamSelect, .entry .riderSelect, .entry .horseSelect {
     flex: 1;
@@ -164,7 +195,8 @@ button:hover {
 
 .eventName {
     flex: 2;
-    font-weight: bold;
+    font-weight: 400;
+    margin-top: 10px;
 }
 
 /* Responsive styles */
@@ -178,8 +210,15 @@ button:hover {
         margin-top: 10px;
     }
 
-    .club .club-fields, .team .team-fields, .horse .horse-fields, .rider .rider-fields, .entry {
-        flex-direction: column;
-        align-items: stretch;
+    .club .club-fields > div, .team .team-fields > div, .horse .horse-fields > div, .rider .rider-fields > div {
+        /*flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
+        flex: 1 1 calc(100% - 20px);
+    }
+    .entry {
+        display: flex;
+        /*flex: 1 1 calc(100% - 20px);
+        */flex-direction: column;
+        align-items: stretch;  
+        
     }
 }

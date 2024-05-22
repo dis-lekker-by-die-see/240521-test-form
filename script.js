@@ -117,72 +117,51 @@ document.getElementById('addClubButton').addEventListener('click', function() {
 });
 
 //=============================================================================================================================
-//                            Rider
+//                            Team
 
-// document.getElementById('addRiderButton').addEventListener('click', function() {
-//     const riderContainer = document.getElementById('riderContainer');
-//     const lastRider = riderContainer.lastElementChild;
-//     const errorMessage = document.getElementById('error-message-rider');
+document.getElementById('addTeamButton').addEventListener('click', function() {
+    const teamContainer = document.getElementById('teamContainer');
+    const lastTeam = teamContainer.lastElementChild;
+    const errorMessage = document.getElementById('error-message-team');
 
-//     if (lastRider) {
-//         const inputs = lastRider.querySelectorAll('input[required], select[required]');
-//         let allFilled = true;
+    if (lastTeam) {
+        const inputs = lastTeam.querySelectorAll('input[required], select[required]');
+        let allFilled = true;
 
-//         inputs.forEach(input => {
-//             if (!input.value.trim()) {
-//                 allFilled = false;
-//                 input.style.borderColor = 'red'; // Highlight the empty fields
-//             } else {
-//                 input.style.borderColor = ''; // Reset the border color if filled
-//             }
-//         });
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.borderColor = 'red'; // Highlight the empty fields
+            } else {
+                input.style.borderColor = ''; // Reset the border color if filled
+            }
+        });
 
-//         // if (!allFilled) {
-//         //     alert('Please fill in all required fields before adding another rider.');
-//         //     return;
-//         // }
-//         if (!allFilled) {
-//             errorMessage.textContent = 'Please fill in all required fields before adding another rider.';
-//             errorMessage.style.display = 'block';
-//             return;
-//         } else {
-//             errorMessage.style.display = 'none';
-//         }
-//     }
+        if (!allFilled) {
+            errorMessage.textContent = 'Please fill in all required fields before adding another team.';
+            errorMessage.style.display = 'block';
+            return;
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
 
+    const teamDiv = document.createElement('div');
+    teamDiv.className = 'team';
+    const teamNumber = document.querySelectorAll('.team').length + 1;
+    teamDiv.innerHTML = `
+        <div class="teamNumber">${teamNumber}</div>
+        <div class="team-fields">
+            <div>
+                <label for="teamName">所属名:</label>
+                <input type="text" class="teamName" required>
+            </div>
+        </div>
+    `;
+    teamContainer.appendChild(teamDiv);
 
-//     const riderDiv = document.createElement('div');
-//     riderDiv.className = 'rider';
-//     const riderNumber = document.querySelectorAll('.rider').length + 1;
-//     riderDiv.innerHTML = `
-//         <div class="riderNumber">${riderNumber}</div>
-//         <div class="rider-fields">
-//             <div>
-//                 <label for="riderName">選手名:</label>
-//                 <input type="text" class="riderName" required>
-//             </div>
-//             <div>
-//                 <label for="riderNameFurigana">フリガナ:</label>
-//                 <input type="text" class="riderNameFurigana" required>
-//             </div>
-//             <div>
-//                 <label for="riderRegNumber">登録番号:</label>
-//                 <input type="text" class="riderRegNumber" required>
-//             </div>
-//             <div>
-//                 <label for="riderSex">性別:</label>
-//                 <select class="riderSex" required>
-//                     <option value="" disabled selected>性別</option>
-//                     <option value="男子">男子</option>
-//                     <option value="女子">女子</option>
-//                 </select>
-//             </div>
-//         </div>
-//     `;
-//     riderContainer.appendChild(riderDiv);
-
-//     updateSelectOptions();
-// });
+    updateSelectOptions();
+});
 
 
 //=============================================================================================================================
@@ -280,6 +259,8 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
         </div>
     `;
     horseContainer.appendChild(horseDiv);
+
+    updateSelectOptions();
 });
 
 
@@ -304,10 +285,6 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
             }
         });
 
-        // if (!allFilled) {
-        //     alert('Please fill in all required fields before adding another rider.');
-        //     return;
-        // }
         if (!allFilled) {
             errorMessage.textContent = 'Please fill in all required fields before adding another rider.';
             errorMessage.style.display = 'block';
@@ -316,7 +293,6 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
             errorMessage.style.display = 'none';
         }
     }
-
 
     const riderDiv = document.createElement('div');
     riderDiv.className = 'rider';
