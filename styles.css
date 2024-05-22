@@ -1,4 +1,4 @@
-/* General styles */
+
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -37,11 +37,16 @@ label {
     margin-top: 10px;
 }
 
+.clubNameDisplay, .registrationOfficerDisplay, .mobileDisplay, .phoneDisplay, .emailDisplay, .faxDisplay, .addressDisplay {
+    display: block; 
+    margin-top: 5px; 
+    color: #333; 
+    margin-left: 9px;
+    font-size: 14px;
+}
 
 .horseNumber, .riderNumber, .entrantNumber {
     font-weight: bold;
-    /*margin-bottom: 10px;
-    */
     display: block;
     margin-right: 100%;
 }
@@ -54,7 +59,7 @@ input, select, button {
     border-radius: 8px;
     box-sizing: border-box;
     transition: all 0.3s ease;
-    width: 100%; /* Ensure inputs take up full width */
+    width: 100%; 
 }
 
 input:focus, select:focus {

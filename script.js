@@ -12,7 +12,7 @@ function generateTimestamp() {
 }
 
 function loadEventCSV() {
-    const lines = csvData仮日程仮日程.split('\n');
+    const lines = csvData仮日程.split('\n');
     lines.forEach(line => {
         const [eventNumber, eventName] = line.split(',');
         if (eventNumber && eventName) {
@@ -21,45 +21,103 @@ function loadEventCSV() {
     });
     console.log('Events loaded:', events); // For debugging purposes
 }
+//=============================================================================================================================
+//                            Club
 
 document.getElementById('addClubButton').addEventListener('click', function() {
     const ridingClubContainer = document.getElementById('ridingClubContainer');
-    
-    // Check if there is already a club input
-    let existingClubInput = ridingClubContainer.querySelector('.clubName');
-    let existingClubDisplay = ridingClubContainer.querySelector('.clubDisplay');
-    
-    if (existingClubInput) {
-        if (!existingClubDisplay) {
-            existingClubDisplay = document.createElement('span');
-            existingClubDisplay.className = 'clubDisplay';
-            existingClubInput.parentNode.appendChild(existingClubDisplay);
-        }
+    const lastClub = ridingClubContainer.lastElementChild;
+    const errorMessage = document.getElementById('error-message-club');
+
+    if (lastClub) {
+        const inputs = lastClub.querySelectorAll('input[required], select[required]');
+        let allFilled = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.borderColor = 'red'; // Highlight the empty fields
+            } else {
+                input.style.borderColor = ''; // Reset the border color if filled
+
+                // Display the input value below the input box
+                const displaySpanClass = input.className + 'Display';
+                let displaySpan = input.parentNode.querySelector('.' + displaySpanClass);
+                
+                if (!displaySpan) {
+                    displaySpan = document.createElement('span');
+                    displaySpan.className = displaySpanClass;
+                    input.parentNode.appendChild(displaySpan);
+                }
+                displaySpan.textContent = input.value;
+            }
+        });
         
-        existingClubDisplay.textContent = ` 「${existingClubInput.value}」の情報を追加しました`;
-        //existingClubDisplay.textContent = existingClubInput.value;
+        if (!allFilled) {
+            errorMessage.textContent = 'Please fill in all required fields.';
+            errorMessage.style.display = 'block';
+            return;
+        } else {
+            errorMessage.style.display = 'none';
+        }
         return;
     }
 
     const clubDiv = document.createElement('div');
     clubDiv.className = 'club';
     clubDiv.innerHTML = `
-        <label for="ridingClub">団体名:</label>
-        <input type="text" class="clubName" required>
-        <span class="clubDisplay"></span>
+        <div>
+            <label for="ridingClub">団体名:</label>
+            <input type="text" class="clubName" required>
+            <span class="clubNameDisplay"></span>
+        </div>
+        <div>
+            <label for="registrationOfficer">申込責任者:</label>
+            <input type="text" class="registrationOfficer" required>
+            <span class="registrationOfficerDisplay"></span>
+        </div>
+        <div>
+            <label for="mobile">携帯:</label>
+            <input type="text" class="mobile" required>
+            <span class="mobileDisplay"></span>
+        </div>
+        <div>
+            <label for="phone">電話:</label>
+            <input type="text" class="phone" required>
+            <span class="phoneDisplay"></span>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" class="email" required>
+            <span class="emailDisplay"></span>
+        </div>
+        <div>
+            <label for="fax">FAX:</label>
+            <input type="text" class="fax" required>
+            <span class="faxDisplay"></span>
+        </div>
+        <div>
+            <label for="address">住所:</label>
+            <input type="text" class="address" required>
+            <span class="addressDisplay"></span>
+        </div>
     `;
     ridingClubContainer.appendChild(clubDiv);
 
-    const clubNameInput = clubDiv.querySelector('.clubName');
-    const clubDisplay = clubDiv.querySelector('.clubDisplay');
+    const inputs = clubDiv.querySelectorAll('input');
 
-    clubNameInput.addEventListener('input', function() {
-        clubDisplay.textContent = clubNameInput.value;
+    inputs.forEach(input => {
+        const displaySpanClass = input.className + 'Display';
+        const displaySpan = clubDiv.querySelector('.' + displaySpanClass);
+
+        input.addEventListener('input', function() {
+            displaySpan.textContent = input.value;
+        });
     });
 });
 
-
-///==============================================================================
+//=============================================================================================================================
+//                            Horse
 
 document.getElementById('addHorseButton').addEventListener('click', function() {
     const horseContainer = document.getElementById('horseContainer');
@@ -156,6 +214,8 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
 });
 
 
+//=============================================================================================================================
+//                            Rider
 
 document.getElementById('addRiderButton').addEventListener('click', function() {
     const riderContainer = document.getElementById('riderContainer');
@@ -222,7 +282,8 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
     updateSelectOptions();
 });
 
-
+//=============================================================================================================================
+//                            Entries
 
 document.getElementById('addEntryButton').addEventListener('click', function() {
     const eventForm = document.getElementById('eventForm');
@@ -288,6 +349,9 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 });
 
 
+//=============================================================================================================================
+//                            Data Arrays
+
 document.getElementById('submitEntriesButton').addEventListener('click', function() {
     const horses = Array.from(document.querySelectorAll('.horse')).map(horse => ({
         name: horse.querySelector('.horseName').value,
@@ -321,6 +385,9 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
     downloadCSV(horsesAndRidersCSV, 'horses_and_riders.csv');
     downloadCSV(entriesCSV, 'entries.csv');
 });
+
+//=============================================================================================================================
+//                            /
 
 function updateSelectOptions() {
     const riderNames = Array.from(document.querySelectorAll('.riderName')).map(input => input.value);
@@ -366,6 +433,9 @@ function updateSelectOptions() {
     });
 }
 
+//=============================================================================================================================
+//                            Generate .csv Entry File
+
 function generateHorsesAndRidersCSV(horses, riders) {
 
     //団体名,フリガナ	馬　　名	登録番号	性別	年齢	毛色	品種	産地	所有者
@@ -407,13 +477,12 @@ function downloadCSV(csvContent, filename) {
     document.body.removeChild(downloadLink);
 }
 
-//=======================================================================================
-//=======================================================================================
-//=======================================================================================
-//=======================================================================================
+//=============================================================================================================================
+//=============================================================================================================================
+//                            csv inline data
 
 
-const csvData仮日程仮 = 
+const csvData仮日程 = 
 `eventNumber,eventName
 1,フレンドシップ120
 2,フレンドシップ100

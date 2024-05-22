@@ -1,58 +1,617 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horse Riding Competition</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Horse Riding Competition Entry</h1>
 
-        <h2>Horses</h2>
-        <div id="horseContainer">
-            <div class="horse">
-                <label for="horseName">Horse Name:</label>
+
+
+
+
+
+
+// last working js ===================================================================
+
+let entryCount = 0;
+let events = {};
+
+document.getElementById('addHorseButton').addEventListener('click', function() {
+    const horseContainer = document.getElementById('horseContainer');
+    const horseDiv = document.createElement('div');
+    horseDiv.className = 'horse';
+    horseDiv.innerHTML = `
+        <label for="horseName">Horse Name:</label>
+        <input type="text" class="horseName" required>
+    `;
+    horseContainer.appendChild(horseDiv);
+});
+
+document.getElementById('addRiderButton').addEventListener('click', function() {
+    const riderContainer = document.getElementById('riderContainer');
+    const riderDiv = document.createElement('div');
+    riderDiv.className = 'rider';
+    riderDiv.innerHTML = `
+        <label for="riderName">Rider Name:</label>
+        <input type="text" class="riderName" required>
+    `;
+    riderContainer.appendChild(riderDiv);
+
+    updateSelectOptions();
+});
+
+document.getElementById('addEntryButton').addEventListener('click', function() {
+    const eventForm = document.getElementById('eventForm');
+    const entryDiv = document.createElement('div');
+    entryDiv.className = 'entry';
+
+    entryCount++;
+    entryDiv.innerHTML = `
+        <span class="entrantNumber">${entryCount}</span>
+        
+        <label for="riderSelect">Rider:</label>
+        <select class="riderSelect"></select>
+
+        <label for="eventNumber">Event Number:</label>
+        <input type="number" class="eventNumber" min="1" required>
+        <span class="eventName"></span>
+
+        <label for="horseSelect">Horse:</label>
+        <select class="horseSelect"></select>
+    `;
+    eventForm.appendChild(entryDiv);
+
+    updateSelectOptions();
+});
+
+function updateSelectOptions() {
+    const riderNames = Array.from(document.querySelectorAll('.riderName')).map(input => input.value);
+    const horseNames = Array.from(document.querySelectorAll('.horseName')).map(input => input.value);
+
+    const riderSelects = document.querySelectorAll('.riderSelect');
+    riderSelects.forEach(select => {
+        const selectedValue = select.value;
+        select.innerHTML = '';
+        riderNames.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            select.appendChild(option);
+        });
+        select.value = selectedValue;
+    });
+
+    const horseSelects = document.querySelectorAll('.horseSelect');
+    horseSelects.forEach(select => {
+        const selectedValue = select.value;
+        select.innerHTML = '';
+        horseNames.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            select.appendChild(option);
+        });
+        select.value = selectedValue;
+    });
+
+    const eventNumbers = document.querySelectorAll('.eventNumber');
+    eventNumbers.forEach(input => {
+        input.addEventListener('input', function() {
+            const eventNameSpan = this.nextElementSibling;
+            const eventNumber = this.value;
+            if (events[eventNumber]) {
+                eventNameSpan.textContent = events[eventNumber];
+            } else {
+                eventNameSpan.textContent = 'Event not found';
+            }
+        });
+    });
+}
+
+document.getElementById('submitEntriesButton').addEventListener('click', function() {
+    const horses = Array.from(document.querySelectorAll('.horseName')).map(input => input.value);
+    const riders = Array.from(document.querySelectorAll('.riderName')).map(input => input.value);
+    const entries = Array.from(document.querySelectorAll('.entry')).map(entry => {
+        return {
+            number: entry.querySelector('.entrantNumber').textContent,
+            rider: entry.querySelector('.riderSelect').value,
+            eventNumber: entry.querySelector('.eventNumber').value,
+            eventName: entry.querySelector('.eventName').textContent,
+            horse: entry.querySelector('.horseSelect').value
+        };
+    });
+
+    const horsesAndRidersCSV = generateHorsesAndRidersCSV(horses, riders);
+    const entriesCSV = generateEntriesCSV(entries);
+
+    downloadCSV(horsesAndRidersCSV, 'horses_and_riders.csv');
+    downloadCSV(entriesCSV, 'entries.csv');
+});
+
+function generateHorsesAndRidersCSV(horses, riders) {
+    let csv = 'Horses\n';
+    horses.forEach(horse => {
+        csv += `${horse}\n`;
+    });
+
+    csv += '\nRiders\n';
+    riders.forEach(rider => {
+        csv += `${rider}\n`;
+    });
+
+    return csv;
+}
+
+function generateEntriesCSV(entries) {
+    let csv = 'Entrant Number,Rider,Event Number,Event Name,Horse\n';
+    entries.forEach(entry => {
+        csv += `${entry.number},${entry.rider},${entry.eventNumber},${entry.eventName},${entry.horse}\n`;
+    });
+
+    return csv;
+}
+
+function downloadCSV(csvContent, filename) {
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = filename;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+
+// Inline CSV data as a string
+const csvData = `eventNumber,eventName
+1,Event 1
+2,Event 2
+3,Event 3
+...`; // Insert your full event data here
+
+function loadEventCSV() {
+    const lines = csvData.split('\n');
+    lines.forEach(line => {
+        const [eventNumber, eventName] = line.split(',');
+        if (eventNumber && eventName) {
+            events[eventNumber.trim()] = eventName.trim();
+        }
+    });
+    console.log('Events loaded:', events); // For debugging purposes
+}
+
+// Load event data on page load
+loadEventCSV();
+updateSelectOptions();
+
+
+
+
+
+////=================================================================================
+
+
+/* General styles */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f2e6;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+h1, h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #2b2b2b;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #444;
+}
+
+input, select, button {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #006400;
+    outline: none;
+}
+
+button {
+    background-color: #228B22;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #006400;
+}
+
+.horse, .rider, .entry {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#addClubButton, #addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
+    background-color: #228B22;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    width: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#addClubButton:hover,　#addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #submitEntriesButton:hover {
+    background-color: #006400;
+}
+
+#downloadLink {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #228B22;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+#downloadLink:hover {
+    text-decoration: underline;
+}
+
+
+.riding-club-container .horse-container, .rider-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.club .club-fields, .horse .horse-fields, .rider .rider-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+.club .club-fields > div {
+    flex: 1 1 calc(50% - 20px); /* Adjust the width as needed */
+}
+
+.horse .horse-fields > div, .rider .rider-fields > div {
+    flex: 1 1 calc(33.333% - 20px); /* Adjust the width as needed */
+}
+
+.entry {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.entry .entrantNumber {
+    flex: 0 0 50px; /* Fixed width for entry number */
+}
+
+.entry .riderSelect, .entry .horseSelect {
+    flex: 1;
+    min-width: 150px; /* Set a minimum width for the dropdowns */
+}
+
+.entry .eventNumber {
+    flex: 0 0 80px; /* Fixed width for the event number input */
+}
+
+.eventName {
+    flex: 2;
+    font-weight: bold;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    button, input, select {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .horse .horse-fields, .rider .rider-fields, .entry {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+
+///=================================================================================
+
+document.getElementById('addHorseButton').addEventListener('click', function() {
+    const horseContainer = document.getElementById('horseContainer');
+    const horseDiv = document.createElement('div');
+    horseDiv.className = 'horse';
+    horseDiv.innerHTML = `
+        <div class="horse-fields">
+            <div>
+                <label for="horseName">馬名:</label>
                 <input type="text" class="horseName" required>
             </div>
-        </div>
-        <button type="button" id="addHorseButton">Add Another Horse</button>
-        
-        <h2>Riders</h2>
-        <div id="riderContainer">
-            <div class="rider">
-                <label for="riderName">Rider Name:</label>
-                <input type="text" class="riderName" required>
+            <div>
+                <label for="horseNameFurigana">フリガナ:</label>
+                <input type="text" class="horseNameFurigana" required>
+            </div>
+            <div>
+                <label for="horseRegNumber">登録番号:</label>
+                <input type="text" class="horseRegNumber" required>
+            </div>
+            <div>
+                <label for="horseSex">性別:</label>
+                <select class="horseSex" required>
+                    <option value="セン">セン</option>
+                    <option value="牝">牝</option>
+                    <option value="牡">牡</option>
+                </select>
+            </div>
+            <div>
+                <label for="horseAge">年齢:</label>
+                <input type="text" class="horseAge">
+            </div>
+            <div>
+                <label for="horseColor">毛色:</label>
+                <select class="horseColor" required>
+                    <option value="鹿毛">鹿毛</option>
+                    <option value="黒鹿毛">黒鹿毛</option>
+                    <option value="栗毛">栗毛</option>
+                    <option value="芦毛">芦毛</option>
+                    <option value="栃栗毛">栃栗毛</option>
+                    <option value="青鹿毛">青鹿毛</option>
+                    <option value="青毛">青毛</option>
+                    <option value="粕毛">粕毛</option>
+                    <option value="ブチ">ブチ</option>
+                </select>
+            </div>
+            <div>
+                <label for="horseBreed">品種:</label>
+                <input type="text" class="horseBreed">
+            </div>
+            <div>
+                <label for="horseOrigin">産地:</label>
+                <input type="text" class="horseOrigin">
+            </div>
+            <div>
+                <label for="horseOwner">所有者:</label>
+                <input type="text" class="horseOwner">
             </div>
         </div>
-        <button type="button" id="addRiderButton">Add Another Rider</button>
+    `;
+    horseContainer.appendChild(horseDiv);
+});
+
+
+
+
+//=============================================================================================================================
+//                            Club
+
+document.getElementById('addClubButton').addEventListener('click', function() {
+    const ridingClubContainer = document.getElementById('ridingClubContainer');
+    const lastClub = ridingClubContainer.lastElementChild;
+    const errorMessage = document.getElementById('error-message-club');
+
+    if (lastClub) {
+        const inputs = lastClub.querySelectorAll('input[required], select[required]');
+        let allFilled = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.borderColor = 'red'; // Highlight the empty fields
+            } else {
+                input.style.borderColor = ''; // Reset the border color if filled
+            }
+        });
         
-        <h2>Event Entries</h2>
-        <form id="eventForm">
-            <div class="entry">
-                <span class="entrantNumber">1</span>
-                
-                <label for="riderSelect">Rider:</label>
-                <select class="riderSelect"></select>
+        if (!allFilled) {
+            errorMessage.textContent = 'Please fill in all required fields.';
+            errorMessage.style.display = 'block';
+            return;
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
 
-                <label for="eventNumber">Event Number:</label>
-                <input type="number" class="eventNumber" min="1" required>
-                <span class="eventName"></span>
+    // Check if there is already a club input
+    let existingClubInput = ridingClubContainer.querySelector('.clubName');
+    let existingClubDisplay = ridingClubContainer.querySelector('.clubNameDisplay');
+    
+    if (existingClubInput) {
+        if (!existingClubDisplay) {
+            existingClubDisplay = document.createElement('span');
+            existingClubDisplay.className = 'clubNameDisplay';
+            existingClubInput.parentNode.appendChild(existingClubDisplay);
+        }
+        
+        existingClubDisplay.textContent = `  ${existingClubInput.value}`;
+        //existingClubDisplay.textContent = existingClubInput.value;
 
-                <label for="horseSelect">Horse:</label>
-                <select class="horseSelect"></select>
-            </div>
-        </form>
-        <button type="button" id="addEntryButton">Add Another Entry</button>
-        <button type="button" id="submitEntriesButton">Submit Entries</button>
+        return;
+    }
+
+    const clubDiv = document.createElement('div');
+    clubDiv.className = 'club';
+    clubDiv.innerHTML = `
         
         <div>
-            <h2>Download Entry List</h2>
-            <a id="downloadLink" style="display:none;">Download CSV</a>
+            <label for="ridingClub">団体名:</label>
+            <input type="text" class="clubName" required>
+            <span class="clubNameDisplay"></span>
         </div>
-    </div>
+        <div>
+            <label for="registrationOfficer">申込責任者:</label>
+            <input type="text" class="registrationOfficer" required>
+        </div>
+        <div>
+            <label for="mobile">携帯:</label>
+            <input type="text" class="mobile" required>
+        </div>
+        <div>
+            <label for="phone">電話:</label>
+            <input type="text" class="phone" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" class="email" required>
+        </div>
+        <div>
+            <label for="fax">FAX:</label>
+            <input type="text" class="fax" required>
+        </div>
+        
+        <div>
+            <label for="address">住所:</label>
+            <input type="text" class="address" required>
+        </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+
+
+
+    `;
+    ridingClubContainer.appendChild(clubDiv);
+
+    const clubNameInput = clubDiv.querySelector('.clubName');
+    const clubDisplay = clubDiv.querySelector('.clubNameDisplay');
+
+    clubNameInput.addEventListener('input', function() {
+        clubDisplay.textContent = clubNameInput.value;
+    });
+});
+
+//=============================================================================================================================
+//                            Club
+
+// document.getElementById('addClubButton').addEventListener('click', function() {
+//     const ridingClubContainer = document.getElementById('ridingClubContainer');
+//     const lastClub = ridingClubContainer.lastElementChild;
+//     const errorMessage = document.getElementById('error-message-club');
+
+//     let existingClubInput = ridingClubContainer.querySelector('.clubName');
+//     let existingClubDisplay = ridingClubContainer.querySelector('.clubNameDisplay');
+
+
+//     const displayClubName = document.createElement('span');
+//     displayClubName.textContent = ridingClubContainer.querySelector('.clubName');
+    
+
+//     if (lastClub) {
+//         const inputs = lastClub.querySelectorAll('input[required], select[required]');
+//         let allFilled = true;
+
+//         inputs.forEach(input => {
+//             if (!input.value.trim()) {
+//                 allFilled = false;
+//                 input.style.borderColor = 'red'; // Highlight the empty fields
+//             } else {
+//                 input.style.borderColor = ''; // Reset the border color if filled
+
+//                 if (existingClubInput) {
+//                     if (!existingClubDisplay) {
+//                         existingClubDisplay = document.createElement('span');
+//                         existingClubDisplay.className = 'clubNameDisplay';
+//                         existingClubInput.parentNode.appendChild(existingClubDisplay);
+//                     }
+//                     existingClubDisplay.textContent = `  ${existingClubInput.value}`;
+//                     return;
+//                 }                    
+
+//             }
+//         });
+        
+//         if (!allFilled) {
+//             errorMessage.textContent = 'Please fill in all required fields.';
+//             errorMessage.style.display = 'block';
+//             return;
+//         } else {
+//             errorMessage.style.display = 'none';
+//         }
+//     }
+
+//     const clubDiv = document.createElement('div');
+//     clubDiv.className = 'club';
+//     clubDiv.innerHTML = `
+//         <div>
+//             <label for="ridingClub">団体名:</label>
+//             <input type="text" class="clubName" required>
+//             <span class="clubNameDisplay"></span>
+//         </div>
+//         <div>
+//             <label for="registrationOfficer">申込責任者:</label>
+//             <input type="text" class="registrationOfficer" required>
+//             <span class="registrationOfficerDisplay"></span>
+//         </div>        
+//         <div>
+//             <label for="mobile">携帯:</label>
+//             <input type="text" class="mobile" required>
+//         </div>
+//         <div>
+//             <label for="phone">電話:</label>
+//             <input type="text" class="phone" required>
+//         </div>
+//         <div>
+//             <label for="email">Email:</label>
+//             <input type="email" class="email" required>
+//         </div>
+//         <div>
+//             <label for="fax">FAX:</label>
+//             <input type="text" class="fax" required>
+//         </div>
+        
+//         <div>
+//             <label for="address">住所:</label>
+//             <input type="text" class="address" required>
+//         </div>
+
+//     `;
+//     ridingClubContainer.appendChild(clubDiv);
+
+//     const clubNameInput = clubDiv.querySelector('.clubName');
+//     const clubDisplay = clubDiv.querySelector('.clubNameDisplay');
+
+//     clubNameInput.addEventListener('input', function() {
+//         clubDisplay.textContent = clubNameInput.value;
+//     });
+
+
+// });
+
+
+
+////////////////////////////////////////////////
+
+
+
