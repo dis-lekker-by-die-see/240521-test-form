@@ -157,20 +157,20 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
         }
     }
 
-
-
-
-
-
     const teamDiv = document.createElement('div');
     teamDiv.className = 'team';
     const teamNumber = document.querySelectorAll('.team').length + 1;
     teamDiv.innerHTML = `
-        <div class="teamNumber">${teamNumber}</div>
         <div class="team-fields">
-            <div>
-                <label for="teamName">所属名:</label>
-                <input type="text" class="teamName" required>
+            <div class="teamNumberLine">
+                <div class="teamNumber">${teamNumber}</div>
+                <div class="teamNumberChar">${'E'.repeat(teamNumber)}</div>
+            </div>
+            <div class="team-fields">
+                <div>
+                    <label for="teamName">所属名:</label>
+                    <input type="text" class="teamName" required>
+                </div>
             </div>
         </div>
     `;
@@ -218,8 +218,11 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
     horseDiv.className = 'horse';
     const horseNumber = document.querySelectorAll('.horse').length + 1;
     horseDiv.innerHTML = `
-        <div class="horseNumber">${horseNumber}</div>
         <div class="horse-fields">
+            <div class="horseNumberLine">
+                <div class="horseNumber">${horseNumber}</div>
+                <div class="horseNumberChar">${'Y'.repeat(horseNumber)}</div>
+            </div>
             <div>
                 <label for="horseName">馬名:</label>
                 <input type="text" class="horseName" required>
@@ -275,10 +278,8 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
         </div>
     `;
     horseContainer.appendChild(horseDiv);
-
     updateSelectOptions();
 });
-
 
 //=============================================================================================================================
 //                            Rider
