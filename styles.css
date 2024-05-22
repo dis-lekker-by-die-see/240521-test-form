@@ -104,9 +104,11 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    /*align-items: center;
-    */
+    align-items: center;
+    
 }
+
+
 
 .team, .horse, .rider, .entry {
     margin-bottom: 20px;
@@ -194,7 +196,7 @@ button:hover {
 }
 
 .eventName {
-    flex: 2;
+    flex: 1;
     font-weight: 400;
     margin-top: 10px;
 }
@@ -216,9 +218,9 @@ button:hover {
     }
     .entry {
         display: flex;
-        /*flex: 1 1 calc(100% - 20px);
-        */flex-direction: column;
+        flex: 1 1 calc(100% - 20px);
+        flex-direction: column;
         align-items: stretch;  
-        
+        /**/
     }
 }
