@@ -412,23 +412,33 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
             <div id="${charDisplayId}" class="entryNumberChar">_</div>
         </div>
         <div class="entry-fields">
-            <div>
-                <label for="teamSelect">所属:</label>
-                <select class="teamSelect" required></select>
-            </div>
-            <div>
-                <label for="riderSelect">Rider:</label>
-                <select class="riderSelect" required></select>
-            </div>
-            <div>
-                <label for="scheduleNumber">Event Number:</label>
-                <input type="number" class="scheduleNumber" min="1" max="999" required>
-                <span class="eventName"></span>
-            </div>
-            <div>
-                <label for="horseSelect">Horse:</label>
-                <select class="horseSelect" required></select>
-            </div>
+
+
+
+        
+        <div>
+        <label for="teamSelect">所属:</label>
+        <select class="teamSelect" required></select>
+    </div>
+    <div>
+        <label for="scheduleNumber">競技番号:</label>
+        <input type="number" class="scheduleNumber" min="1" max="999" required>
+        <span class="eventName"></span>
+    </div>
+    
+    <div>
+        <label for="riderSelect">選手名:</label>
+        <select class="riderSelect" required></select>
+    </div>
+    
+    <div>
+        <label for="horseSelect">Horse:</label>
+        <select class="horseSelect" required></select>
+    </div>
+
+
+
+
         </div>
     `;
     
