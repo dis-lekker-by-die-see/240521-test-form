@@ -19,25 +19,23 @@ function loadEventCSV() {
     lines.forEach(line => {
         const [scheduleNumber,scheduleDate,eventNumber,category,eventCode,
             eventName,eventDescription,priceCode,price] = line.split(',');
-        /*const [scheduleNumber, eventName] = line.split(',');
-        */
         if (scheduleDate && scheduleNumber && eventName) {
             events[scheduleNumber.trim()] = scheduleDate.trim() + ' : ' + eventName.trim();
         }
     });
     console.log('Events loaded:', events); // For debugging purposes
 }
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 function validateLastInputs(inputs,errorMessage) {
     let allFilled = true;
 
     inputs.forEach(input => {
         if (!input.value.trim()) {
             allFilled = false;
-            input.style.borderColor = 'red'; // Highlight the empty fields
+            input.style.borderColor = 'red';
         } else {
-            input.style.borderColor = ''; // Reset the border color if filled
-            input.style.backgroundColor = inputBoxBackgroundColor; // Assuming inputBoxBackgroundColor is defined
+            input.style.borderColor = '';
+            input.style.backgroundColor = inputBoxBackgroundColor;
         }
     });
 
@@ -53,7 +51,6 @@ function validateLastInputs(inputs,errorMessage) {
 
 //=============================================================================================================================
 //                            Club
-
 document.getElementById('addClubButton').addEventListener('click', function() {
     const ridingClubContainer = document.getElementById('ridingClubContainer');
     const lastClub = ridingClubContainer.lastElementChild;
@@ -61,39 +58,46 @@ document.getElementById('addClubButton').addEventListener('click', function() {
 
     if (lastClub) {
         const inputs = lastClub.querySelectorAll('input[required], select[required]');
-        let allFilled = true;
-
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-                input.style.borderColor = 'red'; // Highlight the empty fields
-            } else {
-                input.style.borderColor = ''; // Reset the border color if filled
-                input.style.backgroundColor = inputBoxBackgroundColor;
-
-                /*// Display the input value below the input box
-                const displaySpanClass = input.className + 'Display';
-                let displaySpan = input.parentNode.querySelector('.' + displaySpanClass);
-                
-                if (!displaySpan) {
-                    displaySpan = document.createElement('span');
-                    displaySpan.className = displaySpanClass;
-                    input.parentNode.appendChild(displaySpan);
-                }
-                displaySpan.textContent = input.value;
-                */
-            }
-        });
-        
-        if (!allFilled) {
-            errorMessage.textContent = errorMessageContent;
-            errorMessage.style.display = 'block';
+        const isValid = validateLastInputs(inputs,errorMessage);
+        if (!isValid) {
             return;
-        } else {
-            errorMessage.style.display = 'none';
         }
-        return;
     }
+
+    // if (lastClub) {
+    //     const inputs = lastClub.querySelectorAll('input[required], select[required]');
+    //     let allFilled = true;
+
+    //     inputs.forEach(input => {
+    //         if (!input.value.trim()) {
+    //             allFilled = false;
+    //             input.style.borderColor = 'red'; // Highlight the empty fields
+    //         } else {
+    //             input.style.borderColor = ''; // Reset the border color if filled
+    //             input.style.backgroundColor = inputBoxBackgroundColor;
+
+    //             // const displaySpanClass = input.className + 'Display';
+    //             // let displaySpan = input.parentNode.querySelector('.' + displaySpanClass);
+                
+    //             // if (!displaySpan) {
+    //             //     displaySpan = document.createElement('span');
+    //             //     displaySpan.className = displaySpanClass;
+    //             //     input.parentNode.appendChild(displaySpan);
+    //             // }
+    //             // displaySpan.textContent = input.value;
+                
+    //         }
+    //     });
+        
+    //     if (!allFilled) {
+    //         errorMessage.textContent = errorMessageContent;
+    //         errorMessage.style.display = 'block';
+    //         return;
+    //     } else {
+    //         errorMessage.style.display = 'none';
+    //     }
+    //     return;
+    // }
 
     const clubDiv = document.createElement('div');
     clubDiv.className = 'club';
@@ -152,7 +156,6 @@ document.getElementById('addClubButton').addEventListener('click', function() {
 //                            Team
 
 document.getElementById('addTeamButton').addEventListener('click', function() {
-    //lastTeam = teamContainer.lastElementChild;
     const teamContainer = document.getElementById('teamContainer');
     const lastTeam = teamContainer.lastElementChild;
     const errorMessage = document.getElementById('error-message-team');
@@ -192,68 +195,8 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
     updateSelectOptions(); // Assuming updateSelectOptions is defined elsewhere
 });
 
-
-
-
-
-///////////////////////////
-/*document.getElementById('addTeamButton').addEventListener('click', function() {
-    const teamContainer = document.getElementById('teamContainer');
-    const lastTeam = teamContainer.lastElementChild;
-    const errorMessage = document.getElementById('error-message-team');
-
-    if (lastTeam) {
-        const inputs = lastTeam.querySelectorAll('input[required], select[required]');
-        let allFilled = true;
-
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-                input.style.borderColor = 'red'; // Highlight the empty fields
-            } else {
-                input.style.borderColor = ''; // Reset the border color if filled
-                input.style.backgroundColor = inputBoxBackgroundColor;
-            }
-        });
-
-        if (!allFilled) {
-            errorMessage.textContent = errorMessageContent;
-            errorMessage.style.display = 'block';
-            return;
-        } else {
-            errorMessage.style.display = 'none';
-        }
-    }
-
-    const teamDiv = document.createElement('div');
-    teamDiv.className = 'team';
-    const teamNumber = document.querySelectorAll('.team').length + 1;
-
-    let charDisplayId = 'teamNumberCharDisplay' + (teamNumber - 1);
-    const teamNumberCharDisplay = document.getElementById(charDisplayId);
-    teamNumberCharDisplay.textContent = 'E'.repeat(teamNumber - 1);
-    charDisplayId = 'teamNumberCharDisplay' + (teamNumber);
-    
-    teamDiv.innerHTML = `
-        <div class="teamNumberLine">
-            <div class="teamNumber">${teamNumber}</div>
-            <div id="${charDisplayId}" class="teamNumberChar">_</div>
-        </div>
-        <div class="team-fields">
-            <div>
-                <label for="teamName">所属名:</label>
-                <input type="text" class="teamName" required>
-            </div>
-        </div>
-    `;
-    teamContainer.appendChild(teamDiv);
-    updateSelectOptions();
-});
-*/
-
 //=============================================================================================================================
 //                            Horse
-
 document.getElementById('addHorseButton').addEventListener('click', function() {
     const horseContainer = document.getElementById('horseContainer');
     const lastHorse = horseContainer.lastElementChild;
@@ -266,33 +209,6 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
             return;
         }
     }
-
-    // if (lastHorse) {
-    //     const inputs = lastHorse.querySelectorAll('input[required], select[required]');
-    //     let allFilled = true;
-
-    //     inputs.forEach(input => {
-    //         if (!input.value.trim()) {
-    //             allFilled = false;
-    //             input.style.borderColor = 'red'; // Highlight the empty fields
-    //         } else {
-    //             input.style.borderColor = ''; // Reset the border color if filled
-    //             input.style.backgroundColor = inputBoxBackgroundColor;
-    //         }
-    //     });
-
-    //     // if (!allFilled) {
-    //     //     alert('Please fill in all required fields before adding another horse.');
-    //     //     return;
-    //     // }
-    //     if (!allFilled) {
-    //         errorMessage.textContent = errorMessageContent;
-    //         errorMessage.style.display = 'block';
-    //         return;
-    //     } else {
-    //         errorMessage.style.display = 'none';
-    //     }
-    // }
 
     const horseDiv = document.createElement('div');
     horseDiv.className = 'horse';
@@ -369,7 +285,6 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
 
 //=============================================================================================================================
 //                            Rider
-
 document.getElementById('addRiderButton').addEventListener('click', function() {
     const riderContainer = document.getElementById('riderContainer');
     const lastRider = riderContainer.lastElementChild;
@@ -382,29 +297,6 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
             return;
         }
     }
-
-    // if (lastRider) {
-    //     const inputs = lastRider.querySelectorAll('input[required], select[required]');
-    //     let allFilled = true;
-
-    //     inputs.forEach(input => {
-    //         if (!input.value.trim()) {
-    //             allFilled = false;
-    //             input.style.borderColor = 'red'; // Highlight the empty fields
-    //         } else {
-    //             input.style.borderColor = ''; // Reset the border color if filled
-    //             input.style.backgroundColor = inputBoxBackgroundColor;
-    //         }
-    //     });
-
-    //     if (!allFilled) {
-    //         errorMessage.textContent = errorMessageContent;
-    //         errorMessage.style.display = 'block';
-    //         return;
-    //     } else {
-    //         errorMessage.style.display = 'none';
-    //     }
-    // }
 
     const riderDiv = document.createElement('div');
     riderDiv.className = 'rider';
@@ -449,7 +341,6 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
 
 //=============================================================================================================================
 //                            Entries
-
 document.getElementById('addEntryButton').addEventListener('click', function() {
     const eventForm = document.getElementById('eventForm');
     const entryContainer = eventForm.querySelector('.entry-container');
@@ -463,33 +354,6 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
             return;
         }
     }
-
-    // if (lastEntry) {
-    //     const inputs = lastEntry.querySelectorAll('input[required], select[required]');
-    //     let allFilled = true;
-
-    //     inputs.forEach(input => {
-    //         if (!input.value.trim()) {
-    //             allFilled = false;
-    //             input.style.borderColor = 'red'; // Highlight the empty fields
-    //         } else {
-    //             input.style.borderColor = ''; // Reset the border color if filled
-    //             input.style.backgroundColor = inputBoxBackgroundColor;
-    //         }
-    //     });
-
-    //     // if (!allFilled) {
-    //     //     alert('Please fill in all required fields before adding another entry.');
-    //     //     return;
-    //     // }
-    //     if (!allFilled) {
-    //         errorMessage.textContent = errorMessageContent;
-    //         errorMessage.style.display = 'block';
-    //         return;
-    //     } else {
-    //         errorMessage.style.display = 'none';
-    //     }
-    // }
 
     const entryDiv = document.createElement('div');
     entryDiv.className = 'entry';
