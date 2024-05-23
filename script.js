@@ -415,7 +415,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
 
 
-        
+
         <div>
         <label for="teamSelect">所属:</label>
         <select class="teamSelect" required></select>
@@ -460,6 +460,10 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 //                            Data Arrays
 
 document.getElementById('submitEntriesButton').addEventListener('click', function() {
+
+    /*let csv = 'horseName,horseNameFurigana,horseRegNumber,'
+    +'horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n';
+    */
     const horses = Array.from(document.querySelectorAll('.horse')).map(horse => ({
         name: horse.querySelector('.horseName').value,
         furigana: horse.querySelector('.horseNameFurigana').value,
@@ -472,10 +476,13 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
         owner: horse.querySelector('.horseOwner').value
     }));
 
+    /*csv += '\nriderName,riderNameFurigana,riderRegNumber,riderSex\n';
+    */
     const riders = Array.from(document.querySelectorAll('.rider')).map(rider => ({
         name: rider.querySelector('.riderName').value,
-        age: rider.querySelector('.riderAge').value,
-        experience: rider.querySelector('.riderExperience').value
+        furigana: rider.querySelector('.riderNameFurigana').value,
+        regNumber: rider.querySelector('.riderRegNumber').value,
+        sex: rider.querySelector('.riderSex').value
     }));
 
     const entries = Array.from(document.querySelectorAll('.entry')).map(entry => ({
@@ -560,18 +567,25 @@ function updateSelectOptions() {
 
 function generateHorsesAndRidersCSV(horses, riders) {
 
-    //団体名,フリガナ	馬　　名	登録番号	性別	年齢	毛色	品種	産地	所有者
-    
+    let csv = 'Club\n';
 
-    let csv = 'Horses\n';
+    
+    
+    
+    csv += '\nhorseName,horseNameFurigana,horseRegNumber,'
+    +'horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n';
     horses.forEach(horse => {
-        csv += `${horse.name},${horse.furigana},${horse.regNumber},${horse.sex},${horse.age},${horse.color},${horse.breed},${horse.origin},${horse.owner}\n`;
+        csv += `${horse.name},${horse.furigana},${horse.regNumber},
+        ${horse.sex},${horse.age},${horse.color},${horse.breed},
+        ${horse.origin},${horse.owner}\n`;
     });
 
-    csv += '\nRiders\n';
+    csv += '\nriderName,riderNameFurigana,riderRegNumber,riderSex\n';
     riders.forEach(rider => {
         csv += `${rider.name},${rider.age},${rider.experience}\n`;
     });
+
+    csv += '\nFees\n';
 
     return csv;
 }
