@@ -27,6 +27,29 @@ function loadEventCSV() {
     });
     console.log('Events loaded:', events); // For debugging purposes
 }
+//////////////////////////////////////////////////////////////
+function validateLastInputs(inputs,errorMessage) {
+    let allFilled = true;
+
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFilled = false;
+            input.style.borderColor = 'red'; // Highlight the empty fields
+        } else {
+            input.style.borderColor = ''; // Reset the border color if filled
+            input.style.backgroundColor = inputBoxBackgroundColor; // Assuming inputBoxBackgroundColor is defined
+        }
+    });
+
+    if (!allFilled) {
+        errorMessage.textContent = errorMessageContent;
+        errorMessage.style.display = 'block';
+        return false;
+    } else {
+        errorMessage.style.display = 'none';
+        return true;
+    }
+}
 
 //=============================================================================================================================
 //                            Club
@@ -129,6 +152,52 @@ document.getElementById('addClubButton').addEventListener('click', function() {
 //                            Team
 
 document.getElementById('addTeamButton').addEventListener('click', function() {
+    //lastTeam = teamContainer.lastElementChild;
+    const teamContainer = document.getElementById('teamContainer');
+    const lastTeam = teamContainer.lastElementChild;
+    const errorMessage = document.getElementById('error-message-team');
+
+    if (lastTeam) {
+        const inputs = lastTeam.querySelectorAll('input[required], select[required]');
+        const isValid = validateLastInputs(inputs,errorMessage);
+        if (!isValid) {
+            return;
+        }
+    }
+
+    const teamDiv = document.createElement('div');
+    teamDiv.className = 'team';
+    const teamNumber = document.querySelectorAll('.team').length + 1;
+
+    let charDisplayId = 'teamNumberCharDisplay' + (teamNumber - 1);
+    const teamNumberCharDisplay = document.getElementById(charDisplayId);
+    if (teamNumberCharDisplay) {
+        teamNumberCharDisplay.textContent = 'E'.repeat(teamNumber - 1);
+    }
+    charDisplayId = 'teamNumberCharDisplay' + teamNumber;
+
+    teamDiv.innerHTML = `
+        <div class="teamNumberLine">
+            <div class="teamNumber">${teamNumber}</div>
+            <div id="${charDisplayId}" class="teamNumberChar">_</div>
+        </div>
+        <div class="team-fields">
+            <div>
+                <label for="teamName">所属名:</label>
+                <input type="text" class="teamName" required>
+            </div>
+        </div>
+    `;
+    teamContainer.appendChild(teamDiv);
+    updateSelectOptions(); // Assuming updateSelectOptions is defined elsewhere
+});
+
+
+
+
+
+///////////////////////////
+/*document.getElementById('addTeamButton').addEventListener('click', function() {
     const teamContainer = document.getElementById('teamContainer');
     const lastTeam = teamContainer.lastElementChild;
     const errorMessage = document.getElementById('error-message-team');
@@ -180,7 +249,7 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
     teamContainer.appendChild(teamDiv);
     updateSelectOptions();
 });
-
+*/
 
 //=============================================================================================================================
 //                            Horse
@@ -192,30 +261,38 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
 
     if (lastHorse) {
         const inputs = lastHorse.querySelectorAll('input[required], select[required]');
-        let allFilled = true;
-
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-                input.style.borderColor = 'red'; // Highlight the empty fields
-            } else {
-                input.style.borderColor = ''; // Reset the border color if filled
-                input.style.backgroundColor = inputBoxBackgroundColor;
-            }
-        });
-
-        // if (!allFilled) {
-        //     alert('Please fill in all required fields before adding another horse.');
-        //     return;
-        // }
-        if (!allFilled) {
-            errorMessage.textContent = errorMessageContent;
-            errorMessage.style.display = 'block';
+        const isValid = validateLastInputs(inputs,errorMessage);
+        if (!isValid) {
             return;
-        } else {
-            errorMessage.style.display = 'none';
         }
     }
+
+    // if (lastHorse) {
+    //     const inputs = lastHorse.querySelectorAll('input[required], select[required]');
+    //     let allFilled = true;
+
+    //     inputs.forEach(input => {
+    //         if (!input.value.trim()) {
+    //             allFilled = false;
+    //             input.style.borderColor = 'red'; // Highlight the empty fields
+    //         } else {
+    //             input.style.borderColor = ''; // Reset the border color if filled
+    //             input.style.backgroundColor = inputBoxBackgroundColor;
+    //         }
+    //     });
+
+    //     // if (!allFilled) {
+    //     //     alert('Please fill in all required fields before adding another horse.');
+    //     //     return;
+    //     // }
+    //     if (!allFilled) {
+    //         errorMessage.textContent = errorMessageContent;
+    //         errorMessage.style.display = 'block';
+    //         return;
+    //     } else {
+    //         errorMessage.style.display = 'none';
+    //     }
+    // }
 
     const horseDiv = document.createElement('div');
     horseDiv.className = 'horse';
@@ -300,26 +377,34 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
 
     if (lastRider) {
         const inputs = lastRider.querySelectorAll('input[required], select[required]');
-        let allFilled = true;
-
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-                input.style.borderColor = 'red'; // Highlight the empty fields
-            } else {
-                input.style.borderColor = ''; // Reset the border color if filled
-                input.style.backgroundColor = inputBoxBackgroundColor;
-            }
-        });
-
-        if (!allFilled) {
-            errorMessage.textContent = errorMessageContent;
-            errorMessage.style.display = 'block';
+        const isValid = validateLastInputs(inputs,errorMessage);
+        if (!isValid) {
             return;
-        } else {
-            errorMessage.style.display = 'none';
         }
     }
+
+    // if (lastRider) {
+    //     const inputs = lastRider.querySelectorAll('input[required], select[required]');
+    //     let allFilled = true;
+
+    //     inputs.forEach(input => {
+    //         if (!input.value.trim()) {
+    //             allFilled = false;
+    //             input.style.borderColor = 'red'; // Highlight the empty fields
+    //         } else {
+    //             input.style.borderColor = ''; // Reset the border color if filled
+    //             input.style.backgroundColor = inputBoxBackgroundColor;
+    //         }
+    //     });
+
+    //     if (!allFilled) {
+    //         errorMessage.textContent = errorMessageContent;
+    //         errorMessage.style.display = 'block';
+    //         return;
+    //     } else {
+    //         errorMessage.style.display = 'none';
+    //     }
+    // }
 
     const riderDiv = document.createElement('div');
     riderDiv.className = 'rider';
@@ -373,30 +458,38 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
     if (lastEntry) {
         const inputs = lastEntry.querySelectorAll('input[required], select[required]');
-        let allFilled = true;
-
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-                input.style.borderColor = 'red'; // Highlight the empty fields
-            } else {
-                input.style.borderColor = ''; // Reset the border color if filled
-                input.style.backgroundColor = inputBoxBackgroundColor;
-            }
-        });
-
-        // if (!allFilled) {
-        //     alert('Please fill in all required fields before adding another entry.');
-        //     return;
-        // }
-        if (!allFilled) {
-            errorMessage.textContent = errorMessageContent;
-            errorMessage.style.display = 'block';
+        const isValid = validateLastInputs(inputs,errorMessage);
+        if (!isValid) {
             return;
-        } else {
-            errorMessage.style.display = 'none';
         }
     }
+
+    // if (lastEntry) {
+    //     const inputs = lastEntry.querySelectorAll('input[required], select[required]');
+    //     let allFilled = true;
+
+    //     inputs.forEach(input => {
+    //         if (!input.value.trim()) {
+    //             allFilled = false;
+    //             input.style.borderColor = 'red'; // Highlight the empty fields
+    //         } else {
+    //             input.style.borderColor = ''; // Reset the border color if filled
+    //             input.style.backgroundColor = inputBoxBackgroundColor;
+    //         }
+    //     });
+
+    //     // if (!allFilled) {
+    //     //     alert('Please fill in all required fields before adding another entry.');
+    //     //     return;
+    //     // }
+    //     if (!allFilled) {
+    //         errorMessage.textContent = errorMessageContent;
+    //         errorMessage.style.display = 'block';
+    //         return;
+    //     } else {
+    //         errorMessage.style.display = 'none';
+    //     }
+    // }
 
     const entryDiv = document.createElement('div');
     entryDiv.className = 'entry';
