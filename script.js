@@ -1,5 +1,7 @@
 let entryCount = 0;
 let events = {};
+let errorMessageContent = 'すべての必須項目にご記入ください';
+let inputBoxBackgroundColor = 'rgb(251, 234, 237)';
 
 function generateTimestamp() {
     const now = new Date();
@@ -8,7 +10,8 @@ function generateTimestamp() {
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
-    return `${year}${month}${day}-${hours}${minutes}`;
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    return `${year}${month}${day}-${hours}${minutes}-${seconds}`;
 }
 
 function loadEventCSV() {
@@ -24,13 +27,6 @@ function loadEventCSV() {
     });
     console.log('Events loaded:', events); // For debugging purposes
 }
-
-// function numberToChar(number) {
-//     return 'm'.repeat(number);
-// }
-
-// // Display in the HTML element
-// document.getElementById('starOutput').textContent = numberToChar(3);
 
 //=============================================================================================================================
 //                            Club
@@ -50,8 +46,9 @@ document.getElementById('addClubButton').addEventListener('click', function() {
                 input.style.borderColor = 'red'; // Highlight the empty fields
             } else {
                 input.style.borderColor = ''; // Reset the border color if filled
+                input.style.backgroundColor = inputBoxBackgroundColor;
 
-                // Display the input value below the input box
+                /*// Display the input value below the input box
                 const displaySpanClass = input.className + 'Display';
                 let displaySpan = input.parentNode.querySelector('.' + displaySpanClass);
                 
@@ -61,11 +58,12 @@ document.getElementById('addClubButton').addEventListener('click', function() {
                     input.parentNode.appendChild(displaySpan);
                 }
                 displaySpan.textContent = input.value;
+                */
             }
         });
         
         if (!allFilled) {
-            errorMessage.textContent = 'すべての必須項目にご記入ください。';
+            errorMessage.textContent = errorMessageContent;
             errorMessage.style.display = 'block';
             return;
         } else {
@@ -134,7 +132,6 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
     const teamContainer = document.getElementById('teamContainer');
     const lastTeam = teamContainer.lastElementChild;
     const errorMessage = document.getElementById('error-message-team');
-    
 
     if (lastTeam) {
         const inputs = lastTeam.querySelectorAll('input[required], select[required]');
@@ -146,11 +143,12 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
                 input.style.borderColor = 'red'; // Highlight the empty fields
             } else {
                 input.style.borderColor = ''; // Reset the border color if filled
+                input.style.backgroundColor = inputBoxBackgroundColor;
             }
         });
 
         if (!allFilled) {
-            errorMessage.textContent = 'Please fill in all required fields before adding another team.';
+            errorMessage.textContent = errorMessageContent;
             errorMessage.style.display = 'block';
             return;
         } else {
@@ -202,6 +200,7 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
                 input.style.borderColor = 'red'; // Highlight the empty fields
             } else {
                 input.style.borderColor = ''; // Reset the border color if filled
+                input.style.backgroundColor = inputBoxBackgroundColor;
             }
         });
 
@@ -210,7 +209,7 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
         //     return;
         // }
         if (!allFilled) {
-            errorMessage.textContent = 'Please fill in all required fields before adding another horse.';
+            errorMessage.textContent = errorMessageContent;
             errorMessage.style.display = 'block';
             return;
         } else {
@@ -309,11 +308,12 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
                 input.style.borderColor = 'red'; // Highlight the empty fields
             } else {
                 input.style.borderColor = ''; // Reset the border color if filled
+                input.style.backgroundColor = inputBoxBackgroundColor;
             }
         });
 
         if (!allFilled) {
-            errorMessage.textContent = 'Please fill in all required fields before adding another rider.';
+            errorMessage.textContent = errorMessageContent;
             errorMessage.style.display = 'block';
             return;
         } else {
@@ -381,6 +381,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
                 input.style.borderColor = 'red'; // Highlight the empty fields
             } else {
                 input.style.borderColor = ''; // Reset the border color if filled
+                input.style.backgroundColor = inputBoxBackgroundColor;
             }
         });
 
@@ -389,7 +390,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
         //     return;
         // }
         if (!allFilled) {
-            errorMessage.textContent = 'Please fill in all required fields before adding another entry.';
+            errorMessage.textContent = errorMessageContent;
             errorMessage.style.display = 'block';
             return;
         } else {
@@ -497,8 +498,8 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
     const horsesAndRidersCSV = generateHorsesAndRidersCSV(horses, riders);
     const entriesCSV = generateEntriesCSV(entries);
 
-    downloadCSV(horsesAndRidersCSV, 'horses_and_riders.csv');
-    downloadCSV(entriesCSV, 'entries.csv');
+    downloadCSV(horsesAndRidersCSV, '連絡先・馬・選手・エントリー料');
+    downloadCSV(entriesCSV, '全エントリー');
 });
 
 //=============================================================================================================================
@@ -602,7 +603,7 @@ function generateEntriesCSV(entries) {
 
 function downloadCSV(csvContent, filename) {
     const timestamp = generateTimestamp();
-    const fullFilename = `${filename}-${timestamp}.csv`;
+    const fullFilename = `${compNameDate} - ${filename}  ${timestamp}.csv`;
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const downloadLink = document.createElement('a');
@@ -615,8 +616,9 @@ function downloadCSV(csvContent, filename) {
 
 //=============================================================================================================================
 //=============================================================================================================================
-//                            csv inline data
+//                            Competition Specific Data
 
+const compNameDate = '第48回中国・四国馬術大会';
 
 const csvData仮日程 = 
 `scheduleNumber,scheduleDate,eventNumber,category,eventCode,eventName,eventDescription,priceCode,price
