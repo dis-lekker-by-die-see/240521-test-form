@@ -16,7 +16,7 @@ function loadEventCSV() {
     lines.forEach(line => {
         const [scheduleNumber,scheduleDate,eventNumber,category,eventCode,
             eventName,eventDescription,priceCode,price] = line.split(',');
-        /*const [eventNumber, eventName] = line.split(',');
+        /*const [scheduleNumber, eventName] = line.split(',');
         */
         if (scheduleDate && scheduleNumber && eventName) {
             events[scheduleNumber.trim()] = scheduleDate.trim() + ' : ' + eventName.trim();
@@ -421,8 +421,8 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
                 <select class="riderSelect" required></select>
             </div>
             <div>
-                <label for="eventNumber">Event Number:</label>
-                <input type="number" class="eventNumber" min="1" max="999" required>
+                <label for="scheduleNumber">Event Number:</label>
+                <input type="number" class="scheduleNumber" min="1" max="999" required>
                 <span class="eventName"></span>
             </div>
             <div>
@@ -472,7 +472,7 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
         teamName: entry.querySelector('.teamSelect').textContent,
         number: entry.querySelector('.entryNumber').textContent,
         rider: entry.querySelector('.riderSelect').value,
-        eventNumber: entry.querySelector('.eventNumber').value,
+        scheduleNumber: entry.querySelector('.scheduleNumber').value,
         eventName: entry.querySelector('.eventName').textContent,
         horse: entry.querySelector('.horseSelect').value
     }));
@@ -531,13 +531,13 @@ function updateSelectOptions() {
         select.value = selectedValue;
     });
 
-    const eventNumbers = document.querySelectorAll('.eventNumber');
-    eventNumbers.forEach(input => {
+    const scheduleNumbers = document.querySelectorAll('.scheduleNumber');
+    scheduleNumbers.forEach(input => {
         input.addEventListener('input', function() {
             const eventNameSpan = this.nextElementSibling;
-            const eventNumber = this.value;
-            if (events[eventNumber]) {
-                eventNameSpan.textContent = events[eventNumber];
+            const scheduleNumber = this.value;
+            if (events[scheduleNumber]) {
+                eventNameSpan.textContent = events[scheduleNumber];
             } else {
                 eventNameSpan.textContent = 'Event not found';
             }
@@ -570,7 +570,7 @@ function generateEntriesCSV(entries) {
     //団体名,フリガナ	選手名	登録番号	性別
     let csv = 'Entrant Number,Rider,Event Number,Event Name,Horse\n';
     entries.forEach(entry => {
-        csv += `${entry.number},${entry.rider},${entry.eventNumber},${entry.eventName},${entry.horse}\n`;
+        csv += `${entry.number},${entry.rider},${entry.scheduleNumber},${entry.eventName},${entry.horse}\n`;
     });
 
     return csv;
