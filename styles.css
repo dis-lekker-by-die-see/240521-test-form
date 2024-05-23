@@ -79,14 +79,13 @@ h1, h2 {
     position: relative;
     top: -43px; 
     font-size: 4.5em;
-    
     overflow: hidden;
 }
 .entryNumberLine {
     margin-top: 15px;
     display: flex;
     align-items: flex-start; 
-    margin-bottom: -30px;
+    margin-bottom: -20px;
     margin-right: 100%
 }
 

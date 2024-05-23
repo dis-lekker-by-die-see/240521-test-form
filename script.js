@@ -410,6 +410,10 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
         </div>
         <div class="entry-fields">
             <div>
+                <label for="teamSelect">所属:</label>
+                <select class="teamSelect" required></select>
+            </div>
+            <div>
                 <label for="riderSelect">Rider:</label>
                 <select class="riderSelect" required></select>
             </div>
@@ -462,6 +466,7 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
     }));
 
     const entries = Array.from(document.querySelectorAll('.entry')).map(entry => ({
+        teamName: entry.querySelector('.teamSelect').textContent,
         number: entry.querySelector('.entryNumber').textContent,
         rider: entry.querySelector('.riderSelect').value,
         eventNumber: entry.querySelector('.eventNumber').value,
@@ -480,9 +485,23 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
 //                            /
 
 function updateSelectOptions() {
+    const teamNames = Array.from(document.querySelectorAll('.teamName')).map(input => input.value);
     const riderNames = Array.from(document.querySelectorAll('.riderName')).map(input => input.value);
     const horseNames = Array.from(document.querySelectorAll('.horseName')).map(input => input.value);
 
+    const teamSelects = document.querySelectorAll('.teamSelect');
+    teamSelects.forEach(select => {
+        const selectedValue = select.value;
+        select.innerHTML = '';
+        teamNames.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            select.appendChild(option);
+        });
+        select.value = selectedValue;
+    });
+    
     const riderSelects = document.querySelectorAll('.riderSelect');
     riderSelects.forEach(select => {
         const selectedValue = select.value;
