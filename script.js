@@ -218,10 +218,16 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
     const horseDiv = document.createElement('div');
     horseDiv.className = 'horse';
     const horseNumber = document.querySelectorAll('.horse').length + 1;
+
+    let charDisplayId = 'horseNumberCharDisplay' + (horseNumber - 1);
+    const horseNumberCharDisplay = document.getElementById(charDisplayId);
+    horseNumberCharDisplay.textContent = 'Y'.repeat(horseNumber - 1);
+    charDisplayId = 'horseNumberCharDisplay' + (horseNumber);
+
     horseDiv.innerHTML = `
         <div class="horseNumberLine">
             <div class="horseNumber">${horseNumber}</div>
-            <div class="horseNumberChar">${'Y'.repeat(horseNumber)}</div>
+            <div id="${charDisplayId}" class="horseNumberChar">_</div>
         </div>
         <div class="horse-fields">
             <div>
@@ -315,10 +321,16 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
     const riderDiv = document.createElement('div');
     riderDiv.className = 'rider';
     const riderNumber = document.querySelectorAll('.rider').length + 1;
+
+    let charDisplayId = 'riderNumberCharDisplay' + (riderNumber - 1);
+    const riderNumberCharDisplay = document.getElementById(charDisplayId);
+    riderNumberCharDisplay.textContent = 'V'.repeat(riderNumber - 1);
+    charDisplayId = 'riderNumberCharDisplay' + (riderNumber);
+
     riderDiv.innerHTML = `
         <div class="riderNumberLine">
             <div class="riderNumber">${riderNumber}</div>
-            <div class="riderNumberChar">${'V'.repeat(riderNumber)}</div>
+            <div id="${charDisplayId}" class="riderNumberChar">_</div>
         </div>
         <div class="rider-fields">
             <div>
@@ -384,12 +396,17 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
     const entryDiv = document.createElement('div');
     entryDiv.className = 'entry';
-
     const entryNumber = document.querySelectorAll('.entry').length + 1;
+
+    let charDisplayId = 'entryNumberCharDisplay' + (entryNumber - 1);
+    const entryNumberCharDisplay = document.getElementById(charDisplayId);
+    entryNumberCharDisplay.textContent = 'C'.repeat(entryNumber - 1);
+    charDisplayId = 'entryNumberCharDisplay' + (entryNumber);
+
     entryDiv.innerHTML = `
         <div class="entryNumberLine">
             <div class="entryNumber">${entryNumber}</div>
-            <div class="entryNumberChar">${'C'.repeat(entryNumber)}</div>
+            <div id="${charDisplayId}" class="entryNumberChar">_</div>
         </div>
         <div class="entry-fields">
             <div>
