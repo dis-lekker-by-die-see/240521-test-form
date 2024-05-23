@@ -62,6 +62,7 @@ document.getElementById('addClubButton').addEventListener('click', function() {
         if (!isValid) {
             return;
         }
+        return;
     }
 
     // if (lastClub) {
@@ -150,6 +151,10 @@ document.getElementById('addClubButton').addEventListener('click', function() {
             displaySpan.textContent = input.value;
         });
     });
+
+// Add update select here //
+
+
 });
 
 //=============================================================================================================================
@@ -389,6 +394,16 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
             </div>
         </div>
     `;
+
+
+    
+
+
+
+
+
+
+
     
     // Ensure the entry container exists
     if (!entryContainer) {
@@ -404,7 +419,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
 
 //=============================================================================================================================
-//                            Data Arrays
+//                            Entries : Submit
 
 document.getElementById('submitEntriesButton').addEventListener('click', function() {
 
@@ -434,13 +449,11 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
 
     const entries = Array.from(document.querySelectorAll('.entry')).map(entry => ({
         teamName: entry.querySelector('.teamSelect').textContent,
-        scheduleNumber: entry.querySelector('.scheduleNumber').value,
+        scheduleNumber: entry.querySelector('.scheduleNumber').value, //scheduleName
         //scheduleDate
         //category
         //eventCode
         eventName: entry.querySelector('.eventName').textContent,
-        //selectEventCode
-        //entryStatus
         rider: entry.querySelector('.riderSelect').value, //riderName
         //riderRegNumber
         horse: entry.querySelector('.horseSelect').value //horseName
@@ -458,7 +471,7 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
 });
 
 //=============================================================================================================================
-//                            /
+//                            Array Management
 
 function updateSelectOptions() {
     const teamNames = Array.from(document.querySelectorAll('.teamName')).map(input => input.value);
