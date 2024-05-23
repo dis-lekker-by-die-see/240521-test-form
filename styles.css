@@ -57,7 +57,7 @@ h1, h2 {
 }
 
 /*----------- Number & Counter Character ----------------------------------------------------------*/
-.teamNumberLine, .horseNumberLine, .riderNumberLine, .entryNumberLine {
+.teamNumberLine, .horseNumberLine, .riderNumberLine {
     margin-top: 15px;
     display: flex;
     align-items: flex-start; 
@@ -72,13 +72,29 @@ h1, h2 {
     margin-right: -10px;
 }
 
-.teamNumberChar, .horseNumberChar, .riderNumberChar, .entryNumberChar {
+.teamNumberChar, .horseNumberChar, .riderNumberChar {
     font-family: 'IntellectaHeraldics';
     display: inline-block;
     position: relative;
     top: -43px; 
     font-size: 4.5em;
-    white-space: nowrap;
+    
+    overflow: hidden;
+}
+.entryNumberLine {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start; 
+    margin-bottom: -30px;
+    margin-right: 100%
+}
+
+.entryNumberChar {
+    font-family: 'IntellectaHeraldics';
+    display: inline-block;
+    position: relative;
+    top: -10px; 
+    font-size: 3em;
     overflow: hidden;
 }
 
