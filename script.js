@@ -131,6 +131,7 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
     const teamContainer = document.getElementById('teamContainer');
     const lastTeam = teamContainer.lastElementChild;
     const errorMessage = document.getElementById('error-message-team');
+    
 
     if (lastTeam) {
         const inputs = lastTeam.querySelectorAll('input[required], select[required]');
@@ -157,10 +158,16 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
     const teamDiv = document.createElement('div');
     teamDiv.className = 'team';
     const teamNumber = document.querySelectorAll('.team').length + 1;
+
+    let charDisplayId = 'teamNumberCharDisplay' + (teamNumber - 1);
+    const teamNumberCharDisplay = document.getElementById(charDisplayId);
+    teamNumberCharDisplay.textContent = 'E'.repeat(teamNumber - 1);
+    charDisplayId = 'teamNumberCharDisplay' + (teamNumber);
+    
     teamDiv.innerHTML = `
         <div class="teamNumberLine">
             <div class="teamNumber">${teamNumber}</div>
-            <div class="teamNumberChar">${'E'.repeat(teamNumber)}</div>
+            <div id="${charDisplayId}" class="teamNumberChar">_</div>
         </div>
         <div class="team-fields">
             <div>
