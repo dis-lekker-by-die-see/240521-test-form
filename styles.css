@@ -34,6 +34,7 @@ body {
     background: white;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
+    
 }
 
 p {
@@ -162,6 +163,8 @@ button:hover {
     border: 1px solid #e1e1e1;
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-bottom: 40px;
+    margin-bottom: 10px;
 }
 
 #addClubButton, #addTeamButton, #addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
