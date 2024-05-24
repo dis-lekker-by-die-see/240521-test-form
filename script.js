@@ -423,9 +423,6 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 
 document.getElementById('submitEntriesButton').addEventListener('click', function() {
 
-    /*let csv = 'horseName,horseNameFurigana,horseRegNumber,'
-    +'horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n';
-    */
     const horses = Array.from(document.querySelectorAll('.horse')).map(horse => ({
         name: horse.querySelector('.horseName').value,
         furigana: horse.querySelector('.horseNameFurigana').value,
@@ -438,11 +435,10 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
         owner: horse.querySelector('.horseOwner').value
     }));
 
-    /*csv += '\nriderName,riderNameFurigana,riderRegNumber,riderSex\n';
-    */
     const riders = Array.from(document.querySelectorAll('.rider')).map(rider => ({
+        number: rider.querySelector('.riderNumber').textContent,
         name: rider.querySelector('.riderName').value,
-        furigana: rider.querySelector('.riderNameFurigana').value,
+        nameFurigana: rider.querySelector('.riderNameFurigana').value,
         regNumber: rider.querySelector('.riderRegNumber').value,
         sex: rider.querySelector('.riderSex').value
     }));
@@ -471,7 +467,7 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
 });
 
 //=============================================================================================================================
-//                            Array Management
+//                            Update Data for dropdown menus
 
 function updateSelectOptions() {
     const teamNames = Array.from(document.querySelectorAll('.teamName')).map(input => input.value);
@@ -549,9 +545,9 @@ function generateHorsesAndRidersCSV(horses, riders) {
         ${horse.origin},${horse.owner}\n`;
     });
 
-    csv += '\nriderName,riderNameFurigana,riderRegNumber,riderSex\n';
+    csv += '\nriderNumber,riderName,riderNameFurigana,riderRegNumber,riderSex\n';
     riders.forEach(rider => {
-        csv += `${rider.name},${rider.age},${rider.experience}\n`;
+        csv += `${rider.number},${rider.name},${rider.nameFurigana},${rider.regNumber},${rider.sex}\n`;
     });
 
     csv += '\nFees\n';
