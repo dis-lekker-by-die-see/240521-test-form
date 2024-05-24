@@ -195,7 +195,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-#addClubButton:hover, #addTeamButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #generateAndDownloadCSVButton:hover {
+#addClubButton:hover, #addTeamButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #generateAndDownloadCSVButton:hover, #generateTableButton:hover {
     background-color: #006400;
 }
 

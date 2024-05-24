@@ -3,7 +3,12 @@ let events = {};
 let entryCount = 0;
 let errorMessageContent = 'すべての必須項目にご記入ください';
 let inputBoxBackgroundColor = 'rgb(251, 234, 237)';
-const horseFee = 12000;
+// let total馬 = 0;
+// let total公認 = 0;
+// let total一般 = 0;
+// let totalフレンドシップ = 0;
+// let totalジムカーナ = 0;
+// let totalクロス = 0;
 
 //=============================================================================================================================
 //                            Club
@@ -329,6 +334,11 @@ document.getElementById('generateTableButton').addEventListener('click', functio
     const riders = getRidersData();
     const entries = getEntriesData();
     const tableContainer = document.getElementById('tableContainer');
+    let count公認 = 0;
+    let count一般 = 0;
+    let countフレンドシップ = 0;
+    let countジムカーナ = 0;
+    let countクロス = 0;
     
     let clubTableHTML = `
         <h4>団体 / Organization</h4>
@@ -441,7 +451,6 @@ document.getElementById('generateTableButton').addEventListener('click', functio
             <tbody>
     `;
     riders.forEach(rider => {
-        
         riderTableHTML += `
             <tr>
                 <td>${rider.number}</td>
@@ -480,8 +489,26 @@ document.getElementById('generateTableButton').addEventListener('click', functio
             </thead>
             <tbody>
     `;
+    
+    
+
     entries.forEach(entry => {
         //<td>${entry.category}</td>
+        if (entry.priceCode == "公認") {
+            count公認 += 1;
+        }
+        if (entry.priceCode == "一般") {
+            count一般 += 1;
+        }
+        if (entry.priceCode == "フレンドシップ") {
+            countフレンドシップ += 1;
+        }
+        if (entry.priceCode == "ジムカーナ") {
+            countジムカーナ += 1;
+        }
+        if (entry.priceCode == "クロス") {
+            countクロス += 1;
+        }
         entryTableHTML += `
             <tr>
                 <td>${entry.number}</td>
@@ -505,71 +532,67 @@ document.getElementById('generateTableButton').addEventListener('click', functio
         </table>
     `;
     ////////////////////////////////////////////
-    //fee = parseFloat(horses.number);
-
     let feesTableHTML = `
         <h4>エントリー料 / Fees</h4>
-        
         <table>
             <tr>
                 <th>費用項目</th>
+                <th>数</th>
                 <th>金額</th>
             </tr>
             <tr>
                 <td>馬登録料</td>
-                <td>${(horses.length)*horseFee}</td>
+                <td>${(horses.length)}</td>
+                <td>${(horses.length)*price馬}</td>
             </tr>
             <tr>
                 <td>公認競技</td>
-                <td>12,000</td>
+                <td>${count公認}</td>
+                <td>${count公認*price公認}</td>
             </tr>
             <tr>
                 <td>一般競技</td>
-                <td>7,000</td>
+                <td>${count一般}</td>
+                <td>${count一般*price一般}</td>
             </tr>
             <tr>
                 <td>一般競技 (フレンドシップ)</td>
-                <td>7,000</td>
+                <td>${countフレンドシップ}</td>
+                <td>${countフレンドシップ*priceフレンドシップ}</td>
             </tr>
             <tr>
                 <td>一般競技 (ジムカーナ)</td>
-                <td>5,000</td>
+                <td>${countジムカーナ}</td>
+                <td>${countジムカーナ*priceジムカーナ}</td>
             </tr>
             <tr>
                 <td>一般競技 (クロス)</td>
-                <td>5,000</td>
+                <td>${countクロス}</td>
+                <td>${countクロス*priceクロス}</td>
             </tr>
             <tr>
                 <td>合計</td>
-                <td>5,000</td>
+                <td></td>
+                <td>${((horses.length)*price馬)
+                    +(count公認*price公認)
+                    +(count一般*price一般)
+                    +(countフレンドシップ*priceフレンドシップ)
+                    +(countジムカーナ*priceジムカーナ)
+                    +(countクロス*priceクロス)}</td>
             </tr>
         </table>
-                
-
     `;
-    
-    
-
     //////////////////////////////////////////////////
     tableContainer.innerHTML = clubTableHTML + teamTableHTML 
     + horseTableHTML + riderTableHTML + entryTableHTML + feesTableHTML;
-
 });
 
 //=============================================================================================================================
 //                            CSV 
 document.getElementById('generateAndDownloadCSVButton').addEventListener('click', function() {
 
-    const club = getClubData();
-    const horses = getHorsesData();
-    const riders = getRidersData();
-    const entries = getEntriesData();
-    
-    const generalInfoCSV = generateGeneralInfoCSV(club, horses, riders);
-    const entriesCSV = generateEntriesCSV(entries);
-
-    downloadCSV(generalInfoCSV, '連絡先・馬・選手・エントリー料');
-    downloadCSV(entriesCSV, '全エントリー');
+    downloadCSV(generateGeneralInfoCSV, '連絡先・馬・選手・エントリー料');
+    downloadCSV(generateEntriesCSV, '全エントリー');
 });
 
 //=============================================================================================================================
@@ -689,7 +712,7 @@ function updateSelectOptions() {
             
             if (events[scheduleNumber]) {
                 const eventData = events[scheduleNumber];
-                parentElement.querySelector('.eventInfoDisplay').textContent = `${eventData.scheduleDate} : ${eventData.eventName}`;
+                parentElement.querySelector('.eventInfoDisplay').textContent = `${eventData.scheduleDate} : ${eventData.eventName}`; //(${eventData.priceCode})
                 parentElement.querySelector('.eventName').value = eventData.eventName;
                 parentElement.querySelector('.scheduleDate').value = eventData.scheduleDate;
                 parentElement.querySelector('.category').value = eventData.category;
@@ -773,8 +796,13 @@ function getEntriesData() {
     }));
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
-function generateGeneralInfoCSV(club, horses, riders) {
-
+function generateGeneralInfoCSV() {
+    const club = getClubData();
+    const team = getTeamsData();
+    const horses = getHorsesData();
+    const riders = getRidersData();
+    const entries = getEntriesData();
+    
     let csv = 'Club\n';
 
     csv += '\nhorseName,horseNameFurigana,horseRegNumber,'
@@ -788,13 +816,53 @@ function generateGeneralInfoCSV(club, horses, riders) {
     riders.forEach(rider => {
         csv += `${rider.number},${rider.name},${rider.nameFurigana},${rider.regNumber},${rider.sex}\n`;
     });
+    
+    
 
-    csv += '\nFees\n';
+
+
+
+
+    csv += '\n馬,公認,一般,フレンドシップ,ジムカーナ,クロス\n';
+    let count公認 = 0;
+    let count一般 = 0;
+    let countフレンドシップ = 0;
+    let countジムカーナ = 0;
+    let countクロス = 0;
+
+    //${(horses.length)*price馬}
+    entries.forEach(entry => {
+        if (entry.priceCode == "公認") {
+            count公認 += 1;
+        }
+        if (entry.priceCode == "一般") {
+            count一般 += 1;
+        }
+        if (entry.priceCode == "フレンドシップ") {
+            countフレンドシップ += 1;
+        }
+        if (entry.priceCode == "ジムカーナ") {
+            countジムカーナ += 1;
+        }
+        if (entry.priceCode == "クロス") {
+            countクロス += 1;
+        }
+    })
+
+    // ${((horses.length)*price馬)
+    //     +(count公認*price公認)
+    //     +(count一般*price一般)
+    //     +(countフレンドシップ*priceフレンドシップ)
+    //     +(countジムカーナ*priceジムカーナ)
+    //     +(countクロス*priceクロス)}
+
+
 
     return csv;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
-function generateEntriesCSV(entries) {
+function generateEntriesCSV() {
+    const entries = getEntriesData();
     //団体名,フリガナ	選手名	登録番号	性別
     let csv = 'Entrant Number,Rider,Event Number,Event Name,Horse\n';
     entries.forEach(entry => {
@@ -833,6 +901,12 @@ function downloadCSV(csvContent, filename) {
 //                            Competition Specific Data
 
 const compNameDate = '第48回中国・四国馬術大会';
+const price馬 = 12000;
+const price公認 = 12000;
+const price一般 = 7000;
+const priceフレンドシップ = 7000;
+const priceジムカーナ = 5000;
+const priceクロス = 5000;
 
 const csvData仮日程 = 
 `scheduleNumber,scheduleDate,eventNumber,category,eventCode,eventName,eventDescription,priceCode,price
