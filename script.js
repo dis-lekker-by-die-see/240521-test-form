@@ -1,5 +1,5 @@
 let entryCount = 0;
-let events = {};
+
 let errorMessageContent = 'すべての必須項目にご記入ください';
 let inputBoxBackgroundColor = 'rgb(251, 234, 237)';
 
@@ -14,17 +14,50 @@ function generateTimestamp() {
     return `${year}${month}${day}-${hours}${minutes}-${seconds}`;
 }
 
+
+
+
+//////
+
+let events = {};
+
 function loadEventCSV() {
     const lines = csvData仮日程.split('\n');
     lines.forEach(line => {
-        const [scheduleNumber,scheduleDate,eventNumber,category,eventCode,
-            eventName,eventDescription,priceCode,price] = line.split(',');
+        const [scheduleNumber, scheduleDate, eventNumber, category, eventCode,
+            eventName, eventDescription, priceCode, price] = line.split(',');
         if (scheduleDate && scheduleNumber && eventName) {
-            events[scheduleNumber.trim()] = scheduleDate.trim() + ' : ' + eventName.trim();
+            events[scheduleNumber.trim()] = {
+                scheduleDate: scheduleDate.trim(),
+                eventName: eventName.trim(),
+                category: category.trim(),
+                eventCode: eventCode.trim(),
+                eventDescription: eventDescription.trim(),
+                priceCode: priceCode.trim(),
+                price: parseFloat(price.trim()) // Convert price to a number for calculations
+            };
         }
     });
     console.log('Events loaded:', events); // For debugging purposes
 }
+
+
+
+///////////////////////////////////
+
+// let events = {};
+// function loadEventCSV() {
+//     const lines = csvData仮日程.split('\n');
+//     lines.forEach(line => {
+//         const [scheduleNumber,scheduleDate,eventNumber,category,eventCode,
+//             eventName,eventDescription,priceCode,price] = line.split(',');
+//         if (scheduleDate && scheduleNumber && eventName) {
+//             events[scheduleNumber.trim()] = scheduleDate.trim() + ' : ' + eventName.trim();
+//         }
+//     });
+//     console.log('Events loaded:', events); // For debugging purposes
+// }
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 function validateLastInputs(inputs,errorMessage) {
     let allFilled = true;
@@ -376,34 +409,36 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
         </div>
         <div class="entry-fields">
             <div>
-                <label for="teamSelect">所属:</label>
+                <label for="teamSelect">所属</label>
                 <select class="teamSelect" required></select>
             </div>
             <div>
                 <label for="scheduleNumber">競技番号</label>
                 <input type="number" class="scheduleNumber" min="1" max="999" required>
-                <span class="eventName"></span>
+                <span class="eventInfoDisplay"></span>
+                <div class="scheduleDate" style="display: none;"></div>
+                <div class="category" style="display: none;"></div>
+                <div class="eventCode" style="display: none;"></div>
+                <div class="eventName" style="display: none;"></div>
+                <div class="priceCode" style="display: none;"></div>
+                <div class="price" style="display: none;"></div>
             </div>
             <div>
                 <label for="riderSelect">選手名</label>
                 <select class="riderSelect" required></select>
+                <div class="riderSelectRegNumber" style="display: none;"></div>
             </div>
             <div>
                 <label for="horseSelect">馬名</label>
                 <select class="horseSelect" required></select>
+                <div class="horseSelectRegNumber" style="display: none;"></div>
+            </div>
+            <div>
+                <label for="entryComment">備考</label>
+                <textarea class="entryComment" rows="4" placeholder="選択馬場種目名：2A、OP、等"></textarea>
             </div>
         </div>
     `;
-
-
-    
-
-
-
-
-
-
-
     
     // Ensure the entry container exists
     if (!entryContainer) {
@@ -421,43 +456,49 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
 //=============================================================================================================================
 //                            Entries : Submit
 
-document.getElementById('submitEntriesButton').addEventListener('click', function() {
+document.getElementById('generateAndDownloadCSVButton').addEventListener('click', function() {
 
-    const horses = Array.from(document.querySelectorAll('.horse')).map(horse => ({
-        name: horse.querySelector('.horseName').value,
-        furigana: horse.querySelector('.horseNameFurigana').value,
-        regNumber: horse.querySelector('.horseRegNumber').value,
-        sex: horse.querySelector('.horseSex').value,
-        age: horse.querySelector('.horseAge').value,
-        color: horse.querySelector('.horseColor').value,
-        breed: horse.querySelector('.horseBreed').value,
-        origin: horse.querySelector('.horseOrigin').value,
-        owner: horse.querySelector('.horseOwner').value
-    }));
+    const horses = getHorsesData();
+    
+    // Array.from(document.querySelectorAll('.horse')).map(horse => ({
+    //     name: horse.querySelector('.horseName').value,
+    //     furigana: horse.querySelector('.horseNameFurigana').value,
+    //     regNumber: horse.querySelector('.horseRegNumber').value,
+    //     sex: horse.querySelector('.horseSex').value,
+    //     age: horse.querySelector('.horseAge').value,
+    //     color: horse.querySelector('.horseColor').value,
+    //     breed: horse.querySelector('.horseBreed').value,
+    //     origin: horse.querySelector('.horseOrigin').value,
+    //     owner: horse.querySelector('.horseOwner').value
+    // }));
 
-    const riders = Array.from(document.querySelectorAll('.rider')).map(rider => ({
-        number: rider.querySelector('.riderNumber').textContent,
-        name: rider.querySelector('.riderName').value,
-        nameFurigana: rider.querySelector('.riderNameFurigana').value,
-        regNumber: rider.querySelector('.riderRegNumber').value,
-        sex: rider.querySelector('.riderSex').value
-    }));
+    const riders = getRidersData();
+    
+    // Array.from(document.querySelectorAll('.rider')).map(rider => ({
+    //     number: rider.querySelector('.riderNumber').textContent,
+    //     name: rider.querySelector('.riderName').value,
+    //     nameFurigana: rider.querySelector('.riderNameFurigana').value,
+    //     regNumber: rider.querySelector('.riderRegNumber').value,
+    //     sex: rider.querySelector('.riderSex').value
+    // }));
 
-    const entries = Array.from(document.querySelectorAll('.entry')).map(entry => ({
-        teamName: entry.querySelector('.teamSelect').textContent,
-        scheduleNumber: entry.querySelector('.scheduleNumber').value, //scheduleName
-        //scheduleDate
-        //category
-        //eventCode
-        eventName: entry.querySelector('.eventName').textContent,
-        rider: entry.querySelector('.riderSelect').value, //riderName
-        //riderRegNumber
-        horse: entry.querySelector('.horseSelect').value //horseName
-        //horseRegNumber
-        //priceCode ???
-        //price
-        //comment
-    }));
+    const entries = getEntriesData();
+    
+    // Array.from(document.querySelectorAll('.entry')).map(entry => ({
+    //     teamName: entry.querySelector('.teamSelect').textContent,
+    //     scheduleNumber: entry.querySelector('.scheduleNumber').value, //scheduleName
+    //     //scheduleDate
+    //     //category
+    //     //eventCode
+    //     eventName: entry.querySelector('.eventName').textContent,
+    //     rider: entry.querySelector('.riderSelect').value, //riderName
+    //     //riderRegNumber
+    //     horse: entry.querySelector('.horseSelect').value //horseName
+    //     //horseRegNumber
+    //     //priceCode ???
+    //     //price
+    //     //comment
+    // }));
 
     const horsesAndRidersCSV = generateHorsesAndRidersCSV(horses, riders);
     const entriesCSV = generateEntriesCSV(entries);
@@ -467,13 +508,217 @@ document.getElementById('submitEntriesButton').addEventListener('click', functio
 });
 
 //=============================================================================================================================
-//                            Update Data for dropdown menus
+//                           Table
+
+document.getElementById('generateTableButton').addEventListener('click', function() {
+    const club = getClubData();
+    const teams = getTeamsData();
+    const horses = getHorsesData(); // Get the horses data
+    const riders = getRidersData();
+    const entries = getEntriesData();
+
+    const tableContainer = document.getElementById('tableContainer');
+    
+    let clubTableHTML = `
+        <h4>団体 / Organization</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>団体名</th>
+                    <th>申込責任者</th>
+                    <th>携帯</th>
+                    <th>電話</th>
+                    <th>email</th>
+                    <th>FAX</th>
+                    <th>住所</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    clubTableHTML += `
+        <tr>
+            <td>${club.name}</td>
+            <td>${club.registrationOfficer}</td>
+            <td>${club.mobile}</td>
+            <td>${club.phone}</td>
+            <td>${club.email}</td>
+            <td>${club.fax}</td>
+            <td>${club.address}</td>
+        </tr>
+    `;
+    clubTableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    ////////////////////////////////////////////
+    let teamTableHTML = `
+        <h4>所属 / Team</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>番</th>
+                    <th>所属名</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    teams.forEach(team => {
+        teamTableHTML += `
+            <tr>
+                <td>${team.number}</td>
+                <td>${team.name}</td>
+            </tr>
+        `;
+    });
+    teamTableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    ////////////////////////////////////////////
+    let horseTableHTML = `
+        <h4>馬 / Horses</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>番</th>
+                    <th>馬名</th>
+                    <th>フリガナ</th>
+                    <th>登録番号</th>
+                    <th>性別</th>
+                    <th>年齢</th>
+                    <th>毛色</th>
+                    <th>品種</th>
+                    <th>産地</th>
+                    <th>所有者</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    horses.forEach(horse => {
+        horseTableHTML += `
+            <tr>
+                <td>${horse.number}</td>
+                <td>${horse.name}</td>
+                <td>${horse.furigana}</td>
+                <td>${horse.regNumber}</td>
+                <td>${horse.sex}</td>
+                <td>${horse.age}</td>
+                <td>${horse.color}</td>
+                <td>${horse.breed}</td>
+                <td>${horse.origin}</td>
+                <td>${horse.owner}</td>
+            </tr>
+        `;
+    });
+    horseTableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    ///////////////////////////////////////////////////
+    let riderTableHTML = `
+        <h4>選手 / Riders</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>番</th>
+                    <th>選手名</th>
+                    <th>フリガナ</th>
+                    <th>登録番号</th>
+                    <th>性別</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    riders.forEach(rider => {
+        
+        riderTableHTML += `
+            <tr>
+                <td>${rider.number}</td>
+                <td>${rider.name}</td>
+                <td>${rider.nameFurigana}</td>
+                <td>${rider.regNumber}</td>
+                <td>${rider.sex}</td>
+            </tr>
+        `;
+    });
+
+    riderTableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    //////////////////////////////////////////////////
+    let entryTableHTML = `
+        <h4>Entries</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>番</th>
+                    <th>所属</th>
+                    <th>競技番号</th>
+                    <th>日付</th>
+                    <th>種目名</th>
+                    <th>競技名</th>
+                    <th>選手名</th>
+                    <th>選手登録番号</th>
+                    <th>馬名</th>
+                    <th>馬登録番号</th>
+                    <th>区分</th>
+                    <th>エントリー料</th>
+                    <th>備考</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    entries.forEach(entry => {
+
+        //<td>${entry.category}</td>
+        entryTableHTML += `
+            <tr>
+                <td>${entry.number}</td>
+                <td>${entry.team}</td>
+                <td>${entry.scheduleNumber}</td>
+                <td>${entry.scheduleDate}</td>
+                <td>${entry.eventCode}</td>
+                <td>${entry.eventName}</td>
+                <td>${entry.rider}</td>
+                <td>${entry.riderRegNumber}</td>
+                <td>${entry.horse}</td>
+                <td>${entry.horseRegNumber}</td>
+                <td>${entry.price}</td>
+                <td>${entry.priceCode}</td>
+                <td>${entry.comment}</td>
+            </tr>
+        `;
+    });
+    entryTableHTML += `
+            </tbody>
+        </table>
+    `;
+    //////////////////////////////////////////////////
+    tableContainer.innerHTML = clubTableHTML + teamTableHTML 
+    + horseTableHTML + riderTableHTML + entryTableHTML;
+});
+
+
+
+
+
+
+
+
+
+
+
+//////////// FUNCTIONS
+//=============================================================================================================================
 
 function updateSelectOptions() {
     const teamNames = Array.from(document.querySelectorAll('.teamName')).map(input => input.value);
-    const riderNames = Array.from(document.querySelectorAll('.riderName')).map(input => input.value);
-    const horseNames = Array.from(document.querySelectorAll('.horseName')).map(input => input.value);
-
     const teamSelects = document.querySelectorAll('.teamSelect');
     teamSelects.forEach(select => {
         const selectedValue = select.value;
@@ -486,57 +731,213 @@ function updateSelectOptions() {
         });
         select.value = selectedValue;
     });
-    
+    ////
+
+    const riderNames = Array.from(document.querySelectorAll('.riderName')).map(input => input.value);
+    const riderRegNumbers = Array.from(document.querySelectorAll('.riderRegNumber')).map(input => input.value);
     const riderSelects = document.querySelectorAll('.riderSelect');
     riderSelects.forEach(select => {
         const selectedValue = select.value;
         select.innerHTML = '';
-        riderNames.forEach(name => {
+
+        riderNames.forEach((name, index) => {
             const option = document.createElement('option');
             option.value = name;
             option.textContent = name;
+            option.setAttribute('data-reg-number', riderRegNumbers[index]);
             select.appendChild(option);
         });
         select.value = selectedValue;
+        select.addEventListener('change', function() {
+            const selectedOption = select.options[select.selectedIndex];
+            const regNumber = selectedOption.getAttribute('data-reg-number');
+            const regNumberDiv = select.nextElementSibling;
+            regNumberDiv.textContent = regNumber;
+        });
+        const event = new Event('change');
+        select.dispatchEvent(event);
     });
+
+    
+
+
+    ////
+    // const riderSelects = document.querySelectorAll('.riderSelect');
+    // riderSelects.forEach(select => {
+    //     const selectedValue = select.value;
+    //     select.innerHTML = '';
+    //     riderNames.forEach(name => {
+    //         const option = document.createElement('option');
+    //         option.value = name;
+    //         option.textContent = name;
+    //         select.appendChild(option);
+    //     });
+    //     select.value = selectedValue;
+    // });
+//////////////////
+
+
+
+    const horseNames = Array.from(document.querySelectorAll('.horseName')).map(input => input.value);
+    const horseRegNumbers = Array.from(document.querySelectorAll('.horseRegNumber')).map(input => input.value);
 
     const horseSelects = document.querySelectorAll('.horseSelect');
     horseSelects.forEach(select => {
         const selectedValue = select.value;
         select.innerHTML = '';
-        horseNames.forEach(name => {
+
+        horseNames.forEach((name, index) => {
             const option = document.createElement('option');
             option.value = name;
             option.textContent = name;
+            option.setAttribute('data-reg-number', horseRegNumbers[index]);
             select.appendChild(option);
         });
         select.value = selectedValue;
+        select.addEventListener('change', function() {
+            const selectedOption = select.options[select.selectedIndex];
+            const regNumber = selectedOption.getAttribute('data-reg-number');
+            const regNumberDiv = select.nextElementSibling;
+            regNumberDiv.textContent = regNumber;
+        });
+        const event = new Event('change');
+        select.dispatchEvent(event);
     });
+
+
+
+//////////////
+    // const horseSelects = document.querySelectorAll('.horseSelect');
+    // horseSelects.forEach(select => {
+    //     const selectedValue = select.value;
+    //     select.innerHTML = '';
+    //     horseNames.forEach(name => {
+    //         const option = document.createElement('option');
+    //         option.value = name;
+    //         option.textContent = name;
+    //         select.appendChild(option);
+    //     });
+    //     select.value = selectedValue;
+    // });
+
+
+
+
+    //////////////////////////////////////////////////
 
     const scheduleNumbers = document.querySelectorAll('.scheduleNumber');
     scheduleNumbers.forEach(input => {
         input.addEventListener('input', function() {
-            const eventNameSpan = this.nextElementSibling;
-            const scheduleNumber = this.value;
+            const parentElement = this.closest('.entry-fields'); // Find the closest parent container
+            const scheduleNumber = this.value.trim();
+            
             if (events[scheduleNumber]) {
-                eventNameSpan.textContent = events[scheduleNumber];
+                const eventData = events[scheduleNumber];
+                parentElement.querySelector('.eventInfoDisplay').textContent = `${eventData.scheduleDate} : ${eventData.eventName}`;
+                parentElement.querySelector('.eventName').value = eventData.eventName;
+                parentElement.querySelector('.scheduleDate').value = eventData.scheduleDate;
+                parentElement.querySelector('.category').value = eventData.category;
+                parentElement.querySelector('.eventCode').value = eventData.eventCode;
+                parentElement.querySelector('.priceCode').value = eventData.priceCode;
+                parentElement.querySelector('.price').value = eventData.price;
             } else {
-                eventNameSpan.textContent = 'Event not found';
+                parentElement.querySelector('.eventInfoDisplay').textContent = 'Event not found';
+                parentElement.querySelector('.eventName').value = '';
+                parentElement.querySelector('.scheduleDate').value = '';
+                parentElement.querySelector('.category').value = '';
+                parentElement.querySelector('.eventCode').value = '';
+                parentElement.querySelector('.priceCode').value = '';
+                parentElement.querySelector('.price').value = '';
             }
         });
     });
+
+    ///////////////////////////////////////////////////////////////////
+    // const scheduleNumbers = document.querySelectorAll('.scheduleNumber');
+    // scheduleNumbers.forEach(input => {
+    //     input.addEventListener('input', function() {
+    //         const eventInfoDisplaySpan = this.nextElementSibling;
+    //         const scheduleNumber = this.value;
+    //         if (events[scheduleNumber]) {
+    //             eventInfoDisplaySpan.textContent = events[scheduleNumber];
+    //         } else {
+    //             eventInfoDisplaySpan.textContent = 'Event not found';
+    //         }
+    //     });
+    // });
 }
 
+//////////// FUNCTIONS
 //=============================================================================================================================
-//                            Generate .csv Entry File
+function getClubData() {
+    const club = document.querySelector('.club');
+    return {
+        name: club.querySelector('.clubName').value,
+        registrationOfficer: club.querySelector('.registrationOfficer').value,
+        mobile: club.querySelector('.mobile').value,
+        phone: club.querySelector('.phone').value,
+        email: club.querySelector('.email').value,
+        fax: club.querySelector('.fax').value,
+        address: club.querySelector('.address').value
+    };
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+function getTeamsData() {
+    return Array.from(document.querySelectorAll('.team')).slice(0, -1).map(team => ({
+        number: team.querySelector('.teamNumber').textContent,
+        name: team.querySelector('.teamName').value,
+    }));
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+function getHorsesData() {
+    return Array.from(document.querySelectorAll('.horse')).slice(0, -1).map(horse => ({
+        number: horse.querySelector('.horseNumber').textContent,
+        name: horse.querySelector('.horseName').value,
+        furigana: horse.querySelector('.horseNameFurigana').value,
+        regNumber: horse.querySelector('.horseRegNumber').value,
+        sex: horse.querySelector('.horseSex').value,
+        age: horse.querySelector('.horseAge').value,
+        color: horse.querySelector('.horseColor').value,
+        breed: horse.querySelector('.horseBreed').value,
+        origin: horse.querySelector('.horseOrigin').value,
+        owner: horse.querySelector('.horseOwner').value
+    }));
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+function getRidersData() {
+    return Array.from(document.querySelectorAll('.rider')).slice(0, -1).map(rider => ({
+        number: rider.querySelector('.riderNumber').textContent,
+        name: rider.querySelector('.riderName').value,
+        nameFurigana: rider.querySelector('.riderNameFurigana').value,
+        regNumber: rider.querySelector('.riderRegNumber').value,
+        sex: rider.querySelector('.riderSex').value
+    }));
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+function getEntriesData() {
+    return Array.from(document.querySelectorAll('.entry')).slice(0, -1).map(entry => ({
+        number: entry.querySelector('.entryNumber').textContent,
+        team: entry.querySelector('.teamSelect').value,
+        scheduleNumber: entry.querySelector('.scheduleNumber').value, 
+        scheduleDate: entry.querySelector('.scheduleDate').value,
+        category: entry.querySelector('.category').value,
+        eventCode: entry.querySelector('.eventCode').value,
+        eventName: entry.querySelector('.eventName').value,
+        rider: entry.querySelector('.riderSelect').value,
+        riderRegNumber: entry.querySelector('.riderSelectRegNumber').textContent,
+        horse: entry.querySelector('.horseSelect').value,
+        horseRegNumber: entry.querySelector('.horseSelectRegNumber').textContent,
+        priceCode: entry.querySelector('.priceCode').value,
+        price: entry.querySelector('.price').value,
+        comment: entry.querySelector('.entryComment').value
+    }));
+}
 
+//////////////////////////////////////////////////////////////////////////////////////////////
 function generateHorsesAndRidersCSV(horses, riders) {
 
     let csv = 'Club\n';
 
-    
-    
-    
     csv += '\nhorseName,horseNameFurigana,horseRegNumber,'
     +'horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n';
     horses.forEach(horse => {
@@ -554,7 +955,7 @@ function generateHorsesAndRidersCSV(horses, riders) {
 
     return csv;
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 function generateEntriesCSV(entries) {
     //団体名,フリガナ	選手名	登録番号	性別
     let csv = 'Entrant Number,Rider,Event Number,Event Name,Horse\n';
@@ -564,7 +965,7 @@ function generateEntriesCSV(entries) {
 
     return csv;
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 function downloadCSV(csvContent, filename) {
     const timestamp = generateTimestamp();
     const fullFilename = `${compNameDate} - ${filename}  ${timestamp}.csv`;
@@ -667,8 +1068,3 @@ const csvData仮日程 =
 // Load event data on page load
 loadEventCSV();
 updateSelectOptions();
-
-
-
-
-

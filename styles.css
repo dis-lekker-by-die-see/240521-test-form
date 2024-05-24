@@ -182,7 +182,7 @@ button:hover {
     margin-bottom: 25px;
 }
 
-#addClubButton, #addTeamButton, #addHorseButton, #addRiderButton, #addEntryButton, #submitEntriesButton {
+#addClubButton, #addTeamButton, #addHorseButton, #addRiderButton, #addEntryButton, #generateAndDownloadCSVButton {
     background-color: #228B22;
     color: white;
     border: none;
@@ -195,7 +195,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-#addClubButton:hover, #addTeamButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #submitEntriesButton:hover {
+#addClubButton:hover, #addTeamButton:hover, #addHorseButton:hover, #addRiderButton:hover, #addEntryButton:hover, #generateAndDownloadCSVButton:hover {
     background-color: #006400;
 }
 
@@ -242,7 +242,7 @@ button:hover {
     flex: 0 0 80px; /* Fixed width for the event number input */
 }
 
-.eventName {
+.eventInfoDisplay {
     flex: 1;
     position: relative;
     top: 8px; 
@@ -251,6 +251,9 @@ button:hover {
     margin-left: 8px; 
 }
 
+.entryComment {
+    width: 100%;
+}
 /* Responsive styles */
 @media (max-width: 768px) {
     .container {
@@ -267,4 +270,37 @@ button:hover {
     .entry .entry-fields > div {
         flex: 1 1 calc(100% - 20px);
     }
+}
+
+
+
+/*/////////////////////////////////////////*/
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-container {
+    margin-top: 20px;
 }
