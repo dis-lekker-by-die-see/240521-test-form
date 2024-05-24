@@ -182,7 +182,7 @@ button:hover {
     margin-bottom: 25px;
 }
 
-#addClubButton, #addTeamButton, #addHorseButton, #addRiderButton, #addEntryButton, #generateAndDownloadCSVButton {
+#addClubButton, #addTeamButton, #addHorseButton, #addRiderButton, #addEntryButton, #generateAndDownloadCSVButton, #generateTableButton {
     background-color: #228B22;
     color: white;
     border: none;
@@ -272,8 +272,6 @@ button:hover {
     }
 }
 
-
-
 /*/////////////////////////////////////////*/
 
 table {
@@ -289,10 +287,13 @@ th, td {
 }
 
 th {
+    font-size: 0.8em;
     background-color: #f4f4f4;
     color: #333;
 }
-
+td {
+    font-size: 0.7em;
+}
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
