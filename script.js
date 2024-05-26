@@ -569,9 +569,8 @@ document.getElementById('generateTableButton').addEventListener('click', functio
 //=============================================================================================================================
 //                            CSV 
 document.getElementById('generateAndDownloadCSVButton').addEventListener('click', function() {
-
-    downloadCSV(generateGeneralInfoCSV, '連絡先・馬・選手・エントリー料');
-    downloadCSV(generateEntriesCSV, '全エントリー');
+    downloadCSV(generateGeneralInfoCSV(), '連絡先・馬・選手・エントリー料');
+    downloadCSV(generateEntriesCSV(), '全エントリー');
 });
 
 //=============================================================================================================================
@@ -781,32 +780,32 @@ function calculateFees() {
 
     let fees = [
         { 
-            fee: 馬,
+            fee: '馬',
             count: 0,
             amount: 0
         },
         {
-            fee: 公認,
+            fee: '公認',
             count: 0,
             amount: 0
         },
         { 
-            fee: 一般,
+            fee: '一般',
             count: 0,
             amount: 0
         },
         {
-            fee: フレンドシップ,
+            fee: 'フレンドシップ',
             count: 0,
             amount: 0
         },
         { 
-            fee: ジムカーナ,
+            fee: 'ジムカーナ',
             count: 0,
             amount: 0
         },
         {
-            fee: クロス,
+            fee: 'クロス',
             count: 0,
             amount: 0
         }
@@ -841,33 +840,30 @@ function calculateFees() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 function generateGeneralInfoCSV() {
     const club = getClubData();
-    const team = getTeamsData();
+    const teams = getTeamsData();
     const horses = getHorsesData();
     const riders = getRidersData();
-    const entries = getEntriesData();
+    //const entries = getEntriesData();
     const fees = calculateFees();
     
-    let csv = 'Club\n';
+    let csv = '<Club>\n';
     csv += 'clubName,registrationOfficer,mobile,phone,email,fax,address\n';
-    csv += `${club.clubName},${club.registrationOfficer},${club.mobile},${club.phone},
-    ${club.email},${club.fax},${club.address}
-    \n`;
-    csv += 'Horses\n';///////////////////////////////
-    csv += `horseName,horseNameFurigana,horseRegNumber,
-    horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n`;
+    csv += `${club.clubName},${club.registrationOfficer},${club.mobile},${club.phone},${club.email},${club.fax},${club.address}\n`;
+    csv += '<Teams>\n';////////////////////////////////
+    teams.forEach(team => {
+        csv += `${team.number},${team.name}\n`
+    })
+    csv += '<Horses>\n';///////////////////////////////
+    csv += `horseNumer,horseName,horseNameFurigana,horseRegNumber,horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n`;
     horses.forEach(horse => {
-        csv += `${horse.name},${horse.furigana},${horse.regNumber},
-        ${horse.sex},${horse.age},${horse.color},${horse.breed},
-        ${horse.origin},${horse.owner}
-        \n`;
+        csv += `${horse.number},${horse.name},${horse.furigana},${horse.regNumber},${horse.sex},${horse.age},${horse.color},${horse.breed},${horse.origin},${horse.owner}\n`;
     });
-    csv += 'Riders\n';///////////////////////////////
+    csv += '<Riders>\n';///////////////////////////////
     csv += 'riderNumber,riderName,riderNameFurigana,riderRegNumber,riderSex\n';
     riders.forEach(rider => {
-        csv += `${rider.number},${rider.name},${rider.nameFurigana},
-        ${rider.regNumber},${rider.sex}\n`;
+        csv += `${rider.number},${rider.name},${rider.nameFurigana},${rider.regNumber},${rider.sex}\n`;
     });
-    csv += 'Fees\n';/////////////////////////////////
+    csv += '<Fees>\n';/////////////////////////////////
     csv += 'fee,feeCount,feeAmount\n';
     fees.forEach(f => {
         csv += `${f.fee},${f.count},${f.amount}\n`;
@@ -877,12 +873,10 @@ function generateGeneralInfoCSV() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 function generateEntriesCSV() {
     const entries = getEntriesData();
-    //団体名,フリガナ	選手名	登録番号	性別
     let csv = 'Entrant Number,Rider,Event Number,Event Name,Horse\n';
     entries.forEach(entry => {
         csv += `${entry.number},${entry.rider},${entry.scheduleNumber},${entry.eventName},${entry.horse}\n`;
     });
-
     return csv;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
