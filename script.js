@@ -334,11 +334,7 @@ document.getElementById('generateTableButton').addEventListener('click', functio
     const riders = getRidersData();
     const entries = getEntriesData();
     const tableContainer = document.getElementById('tableContainer');
-    let count公認 = 0;
-    let count一般 = 0;
-    let countフレンドシップ = 0;
-    let countジムカーナ = 0;
-    let countクロス = 0;
+    const fees = calculateFees();
     
     let clubTableHTML = `
         <h4>団体 / Organization</h4>
@@ -489,26 +485,9 @@ document.getElementById('generateTableButton').addEventListener('click', functio
             </thead>
             <tbody>
     `;
-    
-    
 
     entries.forEach(entry => {
         //<td>${entry.category}</td>
-        if (entry.priceCode == "公認") {
-            count公認 += 1;
-        }
-        if (entry.priceCode == "一般") {
-            count一般 += 1;
-        }
-        if (entry.priceCode == "フレンドシップ") {
-            countフレンドシップ += 1;
-        }
-        if (entry.priceCode == "ジムカーナ") {
-            countジムカーナ += 1;
-        }
-        if (entry.priceCode == "クロス") {
-            countクロス += 1;
-        }
         entryTableHTML += `
             <tr>
                 <td>${entry.number}</td>
@@ -542,43 +521,43 @@ document.getElementById('generateTableButton').addEventListener('click', functio
             </tr>
             <tr>
                 <td>馬登録料</td>
-                <td>${(horses.length)}</td>
-                <td>${(horses.length)*price馬}</td>
+                <td>${fees[0].count}</td>
+                <td>${fees[0].amount}</td>
             </tr>
             <tr>
                 <td>公認競技</td>
-                <td>${count公認}</td>
-                <td>${count公認*price公認}</td>
+                <td>${fees[1].count}</td>
+                <td>${fees[1].amount}</td>
             </tr>
             <tr>
                 <td>一般競技</td>
-                <td>${count一般}</td>
-                <td>${count一般*price一般}</td>
+                <td>${fees[2].count}</td>
+                <td>${fees[2].amount}</td>
             </tr>
             <tr>
                 <td>一般競技 (フレンドシップ)</td>
-                <td>${countフレンドシップ}</td>
-                <td>${countフレンドシップ*priceフレンドシップ}</td>
+                <td>${fees[3].count}</td>
+                <td>${fees[3].amount}</td>
             </tr>
             <tr>
                 <td>一般競技 (ジムカーナ)</td>
-                <td>${countジムカーナ}</td>
-                <td>${countジムカーナ*priceジムカーナ}</td>
+                <td>${fees[4].count}</td>
+                <td>${fees[4].amount}</td>
             </tr>
             <tr>
                 <td>一般競技 (クロス)</td>
-                <td>${countクロス}</td>
-                <td>${countクロス*priceクロス}</td>
+                <td>${fees[5].count}</td>
+                <td>${fees[5].amount}</td>
             </tr>
             <tr>
                 <td>合計</td>
                 <td></td>
-                <td>${((horses.length)*price馬)
-                    +(count公認*price公認)
-                    +(count一般*price一般)
-                    +(countフレンドシップ*priceフレンドシップ)
-                    +(countジムカーナ*priceジムカーナ)
-                    +(countクロス*priceクロス)}</td>
+                <td>${fees[0].amount
+                    +fees[1].amount
+                    +fees[2].amount
+                    +fees[3].amount
+                    +fees[4].amount
+                    +fees[5].amount}</td>
             </tr>
         </table>
     `;
@@ -796,68 +775,103 @@ function getEntriesData() {
     }));
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
+function calculateFees() {
+    const horses = getHorsesData();
+    const entries = getEntriesData();
+
+    let fees = [
+        { 
+            fee: 馬,
+            count: 0,
+            amount: 0
+        },
+        {
+            fee: 公認,
+            count: 0,
+            amount: 0
+        },
+        { 
+            fee: 一般,
+            count: 0,
+            amount: 0
+        },
+        {
+            fee: フレンドシップ,
+            count: 0,
+            amount: 0
+        },
+        { 
+            fee: ジムカーナ,
+            count: 0,
+            amount: 0
+        },
+        {
+            fee: クロス,
+            count: 0,
+            amount: 0
+        }
+    ];
+    fees[0].count = horses.length;
+    fees[0].amount = fees[0].count * price馬;
+    entries.forEach(entry => {
+        //<td>${entry.category}</td>
+        if (entry.priceCode == "公認") {
+            fees[1].count += 1;
+            fees[1].amount = fees[1].count * price公認;
+        }
+        if (entry.priceCode == "一般") {
+            fees[2].count += 1;
+            fees[2].amount = fees[2].count * price一般;
+        }
+        if (entry.priceCode == "フレンドシップ") {
+            fees[3].count += 1;
+            fees[3].amount = fees[3].count * priceフレンドシップ;
+        }
+        if (entry.priceCode == "ジムカーナ") {
+            fees[4].count += 1;
+            fees[4].amount = fees[4].count * priceジムカーナ;
+        }
+        if (entry.priceCode == "クロス") {
+            fees[5].count += 1;
+            fees[5].amount = fees[5].count * priceクロス;
+        }
+    });
+    return fees;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
 function generateGeneralInfoCSV() {
     const club = getClubData();
     const team = getTeamsData();
     const horses = getHorsesData();
     const riders = getRidersData();
     const entries = getEntriesData();
+    const fees = calculateFees();
     
     let csv = 'Club\n';
-
-    csv += '\nhorseName,horseNameFurigana,horseRegNumber,'
-    +'horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n';
+    csv += 'clubName,registrationOfficer,mobile,phone,email,fax,address\n';
+    csv += `${club.clubName},${club.registrationOfficer},${club.mobile},${club.phone},
+    ${club.email},${club.fax},${club.address}
+    \n`;
+    csv += 'Horses\n';///////////////////////////////
+    csv += `horseName,horseNameFurigana,horseRegNumber,
+    horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n`;
     horses.forEach(horse => {
         csv += `${horse.name},${horse.furigana},${horse.regNumber},
         ${horse.sex},${horse.age},${horse.color},${horse.breed},
-        ${horse.origin},${horse.owner}\n`;
+        ${horse.origin},${horse.owner}
+        \n`;
     });
-    csv += '\nriderNumber,riderName,riderNameFurigana,riderRegNumber,riderSex\n';
+    csv += 'Riders\n';///////////////////////////////
+    csv += 'riderNumber,riderName,riderNameFurigana,riderRegNumber,riderSex\n';
     riders.forEach(rider => {
-        csv += `${rider.number},${rider.name},${rider.nameFurigana},${rider.regNumber},${rider.sex}\n`;
+        csv += `${rider.number},${rider.name},${rider.nameFurigana},
+        ${rider.regNumber},${rider.sex}\n`;
     });
-    
-    
-
-
-
-
-
-    csv += '\n馬,公認,一般,フレンドシップ,ジムカーナ,クロス\n';
-    let count公認 = 0;
-    let count一般 = 0;
-    let countフレンドシップ = 0;
-    let countジムカーナ = 0;
-    let countクロス = 0;
-
-    //${(horses.length)*price馬}
-    entries.forEach(entry => {
-        if (entry.priceCode == "公認") {
-            count公認 += 1;
-        }
-        if (entry.priceCode == "一般") {
-            count一般 += 1;
-        }
-        if (entry.priceCode == "フレンドシップ") {
-            countフレンドシップ += 1;
-        }
-        if (entry.priceCode == "ジムカーナ") {
-            countジムカーナ += 1;
-        }
-        if (entry.priceCode == "クロス") {
-            countクロス += 1;
-        }
+    csv += 'Fees\n';/////////////////////////////////
+    csv += 'fee,feeCount,feeAmount\n';
+    fees.forEach(f => {
+        csv += `${f.fee},${f.count},${f.amount}\n`;
     })
-
-    // ${((horses.length)*price馬)
-    //     +(count公認*price公認)
-    //     +(count一般*price一般)
-    //     +(countフレンドシップ*priceフレンドシップ)
-    //     +(countジムカーナ*priceジムカーナ)
-    //     +(countクロス*priceクロス)}
-
-
-
     return csv;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
