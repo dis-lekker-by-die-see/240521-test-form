@@ -850,11 +850,12 @@ function generateGeneralInfoCSV() {
     csv += 'clubName,registrationOfficer,mobile,phone,email,fax,address\n';
     csv += `${club.clubName},${club.registrationOfficer},${club.mobile},${club.phone},${club.email},${club.fax},${club.address}\n`;
     csv += '<Teams>\n';////////////////////////////////
+    csv += `teamNumber,teamName\n`;
     teams.forEach(team => {
         csv += `${team.number},${team.name}\n`
     })
     csv += '<Horses>\n';///////////////////////////////
-    csv += `horseNumer,horseName,horseNameFurigana,horseRegNumber,horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n`;
+    csv += `horseNumber,horseName,horseNameFurigana,horseRegNumber,horseSex,horseAge,horseColor,horseBreed,horseOrigin,horseOwner\n`;
     horses.forEach(horse => {
         csv += `${horse.number},${horse.name},${horse.furigana},${horse.regNumber},${horse.sex},${horse.age},${horse.color},${horse.breed},${horse.origin},${horse.owner}\n`;
     });
