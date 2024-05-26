@@ -29,32 +29,32 @@ document.getElementById('addClubButton').addEventListener('click', function() {
     clubDiv.className = 'club';
     clubDiv.innerHTML = `
         <div>
-            <label for="ridingClub">団体名:</label>
+            <label for="ridingClub">団体名</label>
             <input type="text" class="clubName" required>
             <span class="clubNameDisplay"></span>
         </div>
         <div>
-            <label for="registrationOfficer">申込責任者:</label>
+            <label for="registrationOfficer">申込責任者</label>
             <input type="text" class="registrationOfficer" required>
             <span class="registrationOfficerDisplay"></span>
         </div>
         <div>
-            <label for="mobile">携帯:</label>
+            <label for="mobile">携帯</label>
             <input type="text" class="mobile" required>
             <span class="mobileDisplay"></span>
         </div>
         <div>
-            <label for="phone">電話:</label>
+            <label for="phone">電話</label>
             <input type="text" class="phone" required>
             <span class="phoneDisplay"></span>
         </div>
         <div>
-            <label for="email">Email:</label>
+            <label for="email">Email</label>
             <input type="email" class="email" required>
             <span class="emailDisplay"></span>
         </div>
         <div>
-            <label for="fax">FAX:</label>
+            <label for="fax">FAX</label>
             <input type="text" class="fax" required>
             <span class="faxDisplay"></span>
         </div>
@@ -108,7 +108,7 @@ document.getElementById('addTeamButton').addEventListener('click', function() {
         </div>
         <div class="team-fields">
             <div>
-                <label for="teamName">所属名:</label>
+                <label for="teamName">所属名</label>
                 <input type="text" class="teamName" required>
             </div>
         </div>
@@ -145,19 +145,19 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
         </div>
         <div class="horse-fields">
             <div>
-                <label for="horseName">馬名:</label>
+                <label for="horseName">馬名</label>
                 <input type="text" class="horseName" required>
             </div>
             <div>
-                <label for="horseNameFurigana">フリガナ:</label>
+                <label for="horseNameFurigana">フリガナ</label>
                 <input type="text" class="horseNameFurigana" required>
             </div>
             <div>
-                <label for="horseRegNumber">登録番号:</label>
+                <label for="horseRegNumber">登録番号</label>
                 <input type="text" class="horseRegNumber" required>
             </div>
             <div>
-                <label for="horseSex">性別:</label>
+                <label for="horseSex">性別</label>
                 <select class="horseSex" required>
                     <option value="" disabled selected>性別</option>
                     <option value="セン">セン</option>
@@ -166,11 +166,11 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
                 </select>
             </div>
             <div>
-                <label for="horseAge">年齢:</label>
+                <label for="horseAge">年齢</label>
                 <input type="text" class="horseAge" required>
             </div>
             <div>
-                <label for="horseColor">毛色:</label>
+                <label for="horseColor">毛色</label>
                 <select class="horseColor" required>
                     <option value="" disabled selected>毛色</option>
                     <option value="鹿毛">鹿毛</option>
@@ -185,15 +185,15 @@ document.getElementById('addHorseButton').addEventListener('click', function() {
                 </select>
             </div>
             <div>
-                <label for="horseBreed">品種:</label>
+                <label for="horseBreed">品種</label>
                 <input type="text" class="horseBreed" required>
             </div>
             <div>
-                <label for="horseOrigin">産地:</label>
+                <label for="horseOrigin">産地</label>
                 <input type="text" class="horseOrigin" required>
             </div>
             <div>
-                <label for="horseOwner">所有者:</label>
+                <label for="horseOwner">所有者</label>
                 <input type="text" class="horseOwner" required>
             </div>
         </div>
@@ -230,19 +230,19 @@ document.getElementById('addRiderButton').addEventListener('click', function() {
         </div>
         <div class="rider-fields">
             <div>
-                <label for="riderName">選手名:</label>
+                <label for="riderName">選手名</label>
                 <input type="text" class="riderName" required>
             </div>
             <div>
-                <label for="riderNameFurigana">フリガナ:</label>
+                <label for="riderNameFurigana">フリガナ</label>
                 <input type="text" class="riderNameFurigana" required>
             </div>
             <div>
-                <label for="riderRegNumber">登録番号:</label>
+                <label for="riderRegNumber">登録番号 (無いの場合「0」)</label>
                 <input type="text" class="riderRegNumber" required>
             </div>
             <div>
-                <label for="riderSex">性別:</label>
+                <label for="riderSex">性別</label>
                 <select class="riderSex" required>
                     <option value="" disabled selected>性別</option>
                     <option value="男子">男子</option>
@@ -310,7 +310,7 @@ document.getElementById('addEntryButton').addEventListener('click', function() {
             </div>
             <div>
                 <label for="entryComment">備考</label>
-                <textarea class="entryComment" rows="4" placeholder="選択馬場種目名：2A、OP、等"></textarea>
+                <textarea class="entryComment" rows="2" placeholder="選択馬場種目名：2A、OP、等"></textarea>
             </div>
         </div>
     `;
@@ -780,32 +780,32 @@ function calculateFees() {
 
     let fees = [
         { 
-            fee: '馬',
+            item: '馬',
             count: 0,
             amount: 0
         },
         {
-            fee: '公認',
+            item: '公認',
             count: 0,
             amount: 0
         },
         { 
-            fee: '一般',
+            item: '一般',
             count: 0,
             amount: 0
         },
         {
-            fee: 'フレンドシップ',
+            item: 'フレンドシップ',
             count: 0,
             amount: 0
         },
         { 
-            fee: 'ジムカーナ',
+            item: 'ジムカーナ',
             count: 0,
             amount: 0
         },
         {
-            fee: 'クロス',
+            item: 'クロス',
             count: 0,
             amount: 0
         }
@@ -847,8 +847,8 @@ function generateGeneralInfoCSV() {
     const fees = calculateFees();
     
     let csv = '<Club>\n';
-    csv += 'clubName,registrationOfficer,mobile,phone,email,fax,address\n';
-    csv += `${club.clubName},${club.registrationOfficer},${club.mobile},${club.phone},${club.email},${club.fax},${club.address}\n`;
+    csv += 'clubName,clubRegistrationOfficer,clubMobile,clubPhone,clubEmail,clubFax,clubAddress\n';
+    csv += `${club.name},${club.registrationOfficer},${club.mobile},${club.phone},${club.email},${club.fax},${club.address}\n`;
     csv += '<Teams>\n';////////////////////////////////
     csv += `teamNumber,teamName\n`;
     teams.forEach(team => {
@@ -865,9 +865,9 @@ function generateGeneralInfoCSV() {
         csv += `${rider.number},${rider.name},${rider.nameFurigana},${rider.regNumber},${rider.sex}\n`;
     });
     csv += '<Fees>\n';/////////////////////////////////
-    csv += 'fee,feeCount,feeAmount\n';
+    csv += 'feeItem,feeCount,feeAmount\n';
     fees.forEach(f => {
-        csv += `${f.fee},${f.count},${f.amount}\n`;
+        csv += `${f.item},${f.count},${f.amount}\n`;
     })
     return csv;
 }

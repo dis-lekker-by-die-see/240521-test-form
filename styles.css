@@ -42,7 +42,11 @@ p {
     padding: 20px;
 }
 
+hr {
+    margin-bottom: 40px;
+}
 h1, h2 {
+    margin-top: -20px;
     text-align: center;
     font-weight: 500;
     color: #2b2b2b;
@@ -58,7 +62,7 @@ h1, h2 {
 
 /*----------- Number & Counter Character ----------------------------------------------------------*/
 .teamNumberLine, .horseNumberLine, .riderNumberLine {
-    margin-top: 15px;
+    margin-top: -15px;
     display: flex;
     align-items: flex-start; 
     margin-bottom: -60px;
@@ -76,12 +80,12 @@ h1, h2 {
     font-family: 'IntellectaHeraldics';
     display: inline-block;
     position: relative;
-    top: -43px; 
-    font-size: 4.5em;
+    top: -40px; 
+    font-size: 4.2em;
     overflow: hidden;
 }
 .entryNumberLine {
-    margin-top: 15px;
+    margin-top: -10px;
     display: flex;
     align-items: flex-start; 
     margin-bottom: -20px;
@@ -93,7 +97,7 @@ h1, h2 {
     display: inline-block;
     position: relative;
     top: -10px; 
-    font-size: 3em;
+    font-size: 2.8em;
     overflow: hidden;
 }
 
@@ -115,7 +119,7 @@ label {
 select, button {
     margin-top: 5px;
     padding: 8px;
-    font-size: 14px;
+    font-size: 12px; /*14px*/
     border: 1px solid #ddd;
     border-radius: 8px;
     box-sizing: border-box;
@@ -129,12 +133,12 @@ input:focus, select:focus {
 }
 
 select {
-    font-size: 1.1em;
+    font-size: 0.9em;
     font-weight: 500;
 }
 
 input {
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 500;
     margin-top: 5px;
     padding: 8px;
@@ -150,7 +154,7 @@ button {
     color: white;
     border: none;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 0px; /*20px*/
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -165,7 +169,7 @@ button:hover {
     margin-top: 5px; 
     color: #333; 
     margin-left: 9px;
-    font-size: 14px;
+    font-size: 12px; /*14px*/
 }
 
 /*---------------------------------------------------------------------*/
@@ -178,7 +182,7 @@ button:hover {
     border: 1px solid #e1e1e1;
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     margin-bottom: 25px;
 }
 
@@ -189,7 +193,7 @@ button:hover {
     cursor: pointer;
     margin-bottom: 20px;
     padding: 15px 20px;
-    font-size: 16px;
+    font-size: 14px;/*16px*/
     border-radius: 12px;
     width: auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -199,7 +203,7 @@ button:hover {
     background-color: #006400;
 }
 
-#downloadLink {
+/*#downloadLink {
     display: block;
     margin-top: 20px;
     text-align: center;
@@ -211,6 +215,7 @@ button:hover {
 #downloadLink:hover {
     text-decoration: underline;
 }
+*/
 
 .team-container, .horse-container, .rider-container, .entry-container {
     overflow: hidden;
@@ -223,14 +228,14 @@ button:hover {
 .entry .entry-fields, .entryNumberLine, .entryDiv {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 }
 
 .club .club-fields > div, .team .team-fields > div, 
 .horse .horse-fields > div, .rider .rider-fields > div,
 .entry .entry-fields > div {
-    flex: 1 1 calc(50% - 20px);
+    flex: 1 1 calc(25% - 20px);
 }
 
 .entry .teamSelect, .entry .riderSelect, .entry .horseSelect {
@@ -246,7 +251,7 @@ button:hover {
     flex: 1;
     position: relative;
     top: 8px; 
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 400;
     margin-left: 8px; 
 }
@@ -255,7 +260,7 @@ button:hover {
     width: 100%;
 }
 /* Responsive styles */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .container {
         padding: 10px;
     }

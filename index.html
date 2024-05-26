@@ -58,9 +58,9 @@
         <button type="button" id="addClubButton">団体の詳細を追加</button>
         <!-- Teams =============================================================================-->
         <h2>所属 / Team</h2>
-        <h4>
+        <p>
             いくつかの組織・乗馬クラブには複数の所属・チームがあります。例えば、(組織) 蒜山ホースパーク：(所属) 蒜山ホースパーク、(組織) 蒜山ホースパーク：(所属) 真庭市スポーツ少年団。所属名・チームが組織名・乗馬クラブと同じ場合は、ここに組織名をもう一度追加してください。
-        </h4>
+        </p>
         <div id="teamContainer" class="team-container">
             <div class="team">
                 <div class="teamNumberLine">
@@ -163,7 +163,7 @@
                         <input type="text" class="riderNameFurigana" required>
                     </div>
                     <div>
-                        <label for="riderRegNumber">登録番号</label>
+                        <label for="riderRegNumber">登録番号 (無いの場合「0」)</label>
                         <input type="text" class="riderRegNumber" required>
                     </div>
                     <div>
@@ -216,7 +216,7 @@
                         </div>
                         <div>
                             <label for="entryComment">備考</label>
-                            <textarea class="entryComment" rows="4" placeholder="選択馬場種目名：2A、OP、等"></textarea>
+                            <textarea class="entryComment" rows="2" placeholder="選択馬場種目名：2A、OP、等"></textarea>
                         </div>
                     </div>
                 </div>
