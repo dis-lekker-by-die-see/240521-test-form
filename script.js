@@ -846,7 +846,8 @@ function generateGeneralInfoCSV() {
     //const entries = getEntriesData();
     const fees = calculateFees();
     
-    let csv = '<Club>\n';
+    let csv = `\uFEFF` //Byte Order Marker for Excel
+    csv += '<Club>\n';
     csv += 'clubName,clubRegistrationOfficer,clubMobile,clubPhone,clubEmail,clubFax,clubAddress\n';
     csv += `${club.name},${club.registrationOfficer},${club.mobile},${club.phone},${club.email},${club.fax},${club.address}\n`;
     csv += '<Teams>\n';////////////////////////////////
@@ -895,7 +896,7 @@ function generateTimestamp() {
 function downloadCSV(csvContent, filename) {
     const timestamp = generateTimestamp();
     const fullFilename = `${compNameDate} - ${filename}  ${timestamp}.csv`;
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const downloadLink = document.createElement('a');
     downloadLink.href = url;
@@ -991,6 +992,8 @@ const csvData仮日程 =
 70,2024-05-19,34,2,小100,小障害飛越競技100,JEF 小障害A  A-238-2.1  H100㎝以下 W110㎝以下 ,一般,7000
 71,2024-05-19,27,2,ｼﾞﾑｶｰﾅ,ジムカーナ競技,横木通過,ジムカーナ,5000`;
 
+
+const csvDataClub = ``;
 
 
 
