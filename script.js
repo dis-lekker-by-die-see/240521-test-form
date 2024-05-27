@@ -573,7 +573,7 @@ document.getElementById('generateAndDownloadCSVButton').addEventListener('click'
 function loadEventCSV() {
 
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('/仮日程.csv')
+        fetch('仮日程.csv') //'/仮日程.csv'
             .then(response => response.text())
             .then(text => {
 
