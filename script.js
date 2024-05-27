@@ -3,12 +3,6 @@ let events = {};
 let entryCount = 0;
 let errorMessageContent = 'すべての必須項目にご記入ください';
 let inputBoxBackgroundColor = 'rgb(251, 234, 237)';
-// let total馬 = 0;
-// let total公認 = 0;
-// let total一般 = 0;
-// let totalフレンドシップ = 0;
-// let totalジムカーナ = 0;
-// let totalクロス = 0;
 
 //=============================================================================================================================
 //                            Club
@@ -577,23 +571,51 @@ document.getElementById('generateAndDownloadCSVButton').addEventListener('click'
 //=============================================================================================================================
 //                            FUNCTIONS
 function loadEventCSV() {
-    const lines = csvData仮日程.split('\n');
-    lines.forEach(line => {
-        const [scheduleNumber, scheduleDate, eventNumber, category, eventCode,
-            eventName, eventDescription, priceCode, price] = line.split(',');
-        if (scheduleDate && scheduleNumber && eventName) {
-            events[scheduleNumber.trim()] = {
-                scheduleDate: scheduleDate.trim(),
-                eventName: eventName.trim(),
-                category: category.trim(),
-                eventCode: eventCode.trim(),
-                eventDescription: eventDescription.trim(),
-                priceCode: priceCode.trim(),
-                price: parseFloat(price.trim())
-            };
-        }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/仮日程.csv')
+            .then(response => response.text())
+            .then(text => {
+
+                const lines = text.trim().split('\n');
+                lines.forEach(line => {
+                    const [scheduleNumber, scheduleDate, eventNumber, category, eventCode,
+                        eventName, eventDescription, priceCode, price] = line.split(',');
+                if (scheduleDate && scheduleNumber && eventName) {
+                    events[scheduleNumber.trim()] = {
+                        scheduleDate: scheduleDate.trim(),
+                        eventName: eventName.trim(),
+                        category: category.trim(),
+                        eventCode: eventCode.trim(),
+                        eventDescription: eventDescription.trim(),
+                        priceCode: priceCode.trim(),
+                        price: parseFloat(price.trim())
+                    };
+                }
+            });
+            console.log('Events loaded:', events); // For debugging purposes
+            })
+            .catch(error => console.error('Error loading the CSV file:', error));
     });
-    console.log('Events loaded:', events); // For debugging purposes
+
+    /////////////////////////////////////////////
+    // const lines = csvData仮日程.split('\n');
+    // lines.forEach(line => {
+    //     const [scheduleNumber, scheduleDate, eventNumber, category, eventCode,
+    //         eventName, eventDescription, priceCode, price] = line.split(',');
+    //     if (scheduleDate && scheduleNumber && eventName) {
+    //         events[scheduleNumber.trim()] = {
+    //             scheduleDate: scheduleDate.trim(),
+    //             eventName: eventName.trim(),
+    //             category: category.trim(),
+    //             eventCode: eventCode.trim(),
+    //             eventDescription: eventDescription.trim(),
+    //             priceCode: priceCode.trim(),
+    //             price: parseFloat(price.trim())
+    //         };
+    //     }
+    // });
+    // console.log('Events loaded:', events); // For debugging purposes
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
 function validateLastInputs(inputs,errorMessage) {
